@@ -728,77 +728,122 @@
       .whatsapp-float { display: none !important; }
     }
 
-    /* ── CAMPO DE FOTO ── */
+    /* ── CAMPO DE FOTO 3×4 ── */
+    .photo-field-wrap {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    /* Slot no formato passaporte 3×4 */
     .photo-upload-box {
       position: relative;
+      width: 120px;
+      height: 160px;
       border: 2px dashed var(--azul-claro);
-      border-radius: 10px;
-      padding: 24px 16px 16px;
-      text-align: center;
-      background: var(--cinza-claro);
-      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f8faf9;
+      flex-shrink: 0;
       transition: border-color 0.2s, background 0.2s;
       display: flex;
-      flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
-    .photo-upload-box:hover {
-      border-color: var(--azul-escuro);
-      background: #eaeeeb;
-    }
-    .photo-upload-box.has-photo {
-      border-color: var(--verde);
-      border-style: solid;
-      background: #f2f7f4;
-    }
-    #fotoDocumento.invalid ~ #fotoBox {
+    .photo-upload-box:hover { border-color: var(--azul-escuro); background: #eaeeeb; }
+    .photo-upload-box.has-photo { border: 2px solid var(--verde); }
+    /* Erro via :has — quando o input interno tem classe .invalid */
+    .photo-upload-box:has(input.invalid) {
       border-color: var(--vermelho);
       border-style: dashed;
       background: #fff5f5;
     }
+    /* Input invisível sobrepõe o box inteiro — técnica cross-browser confiável */
     .photo-upload-box input[type="file"] {
       position: absolute;
       inset: 0;
-      opacity: 0;
-      cursor: pointer;
       width: 100%;
       height: 100%;
-      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 3;
     }
+    /* Preview cobre o box */
     .photo-preview {
-      display: none;
-      width: 110px;
-      height: 140px;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      border: 2px solid var(--azul-claro);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      display: none;
+      z-index: 1;
     }
     .photo-preview.show { display: block; }
+    /* Placeholder dentro do box */
+    .photo-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+      pointer-events: none;
+      z-index: 2;
+    }
     .photo-upload-icon {
-      font-size: 2.8rem;
-      margin-bottom: 8px;
+      font-size: 2.2rem;
+      margin-bottom: 6px;
       display: block;
       line-height: 1;
     }
     .photo-upload-label {
-      font-size: 0.92rem;
+      font-size: 0.68rem;
       color: var(--azul-escuro);
       font-weight: 600;
+      line-height: 1.3;
     }
-    .photo-upload-hint {
+    /* Painel de instruções ao lado */
+    .photo-info {
+      flex: 1;
+      padding-top: 4px;
+    }
+    .photo-info-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--azul-escuro);
+      margin-bottom: 8px;
+    }
+    .photo-requirements {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px;
+    }
+    .photo-requirements li {
       font-size: 0.76rem;
       color: var(--texto-leve);
-      margin-top: 6px;
-      line-height: 1.5;
+      padding: 2px 0 2px 16px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .photo-requirements li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--azul-claro);
+      font-size: 0.7rem;
+      font-weight: 700;
     }
     .photo-upload-name {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--verde);
       font-weight: 600;
-      margin-top: 6px;
       word-break: break-all;
+      margin-top: 4px;
+    }
+    @media (max-width: 480px) {
+      .photo-field-wrap { flex-direction: column; align-items: center; }
+      .photo-upload-box { width: 105px; height: 140px; }
+      .photo-info { text-align: center; }
+      .photo-requirements li { text-align: left; }
     }
 
     /* Status de completude */
@@ -1097,14 +1142,29 @@
       <div class="subsec-title">Foto do Solicitante</div>
       <div class="field-row cols-1">
         <div class="field">
-          <label>Foto Recente <span class="req">*</span></label>
-          <input type="file" id="fotoDocumento" accept="image/jpeg,image/png,image/jpg,image/webp" onchange="handlePhotoUpload(this)" style="position:absolute;opacity:0;width:0;height:0;pointer-events:none" />
-          <div class="photo-upload-box" id="fotoBox" onclick="document.getElementById('fotoDocumento').click()">
-            <img id="fotoPreview" class="photo-preview" src="" alt="Preview da foto" />
-            <span class="photo-upload-icon" id="fotoIcon">📷</span>
-            <div class="photo-upload-label" id="fotoLabel">Clique aqui para enviar sua foto</div>
-            <div class="photo-upload-hint">JPG ou PNG &nbsp;·&nbsp; Fundo branco &nbsp;·&nbsp; Rosto de frente, olhos abertos<br>Tamanho máximo: 5 MB</div>
-            <div class="photo-upload-name" id="fotoNome"></div>
+          <label>Foto Recente (3×4) <span class="req">*</span></label>
+          <div class="photo-field-wrap">
+            <!-- Box no formato 3×4 — input cobre o box inteiro como overlay -->
+            <div class="photo-upload-box" id="fotoBox">
+              <input type="file" id="fotoDocumento" accept="image/jpeg,image/png,image/jpg,image/webp" onchange="handlePhotoUpload(this)" />
+              <img id="fotoPreview" class="photo-preview" src="" alt="Preview da foto" />
+              <div class="photo-placeholder" id="fotoPlaceholder">
+                <span class="photo-upload-icon">📷</span>
+                <div class="photo-upload-label">Clique para<br>enviar foto</div>
+              </div>
+            </div>
+            <!-- Instruções ao lado -->
+            <div class="photo-info">
+              <div class="photo-info-title">📋 Requisitos da foto</div>
+              <ul class="photo-requirements">
+                <li>Formato 3×4, fundo branco</li>
+                <li>Rosto de frente, olhos abertos</li>
+                <li>Sem óculos ou acessórios</li>
+                <li>Expressão neutra</li>
+                <li>JPG ou PNG · Máx. 5 MB</li>
+              </ul>
+              <div class="photo-upload-name" id="fotoNome"></div>
+            </div>
           </div>
           <span class="field-error-msg"></span>
         </div>
@@ -2141,11 +2201,10 @@
 <script>
 // ── FOTO DO SOLICITANTE ──
 function handlePhotoUpload(input) {
-  const box     = document.getElementById('fotoBox');
-  const preview = document.getElementById('fotoPreview');
-  const icon    = document.getElementById('fotoIcon');
-  const lbl     = document.getElementById('fotoLabel');
-  const nome    = document.getElementById('fotoNome');
+  const box         = document.getElementById('fotoBox');
+  const preview     = document.getElementById('fotoPreview');
+  const placeholder = document.getElementById('fotoPlaceholder');
+  const nome        = document.getElementById('fotoNome');
 
   if (!input.files || !input.files[0]) return;
   const file = input.files[0];
@@ -2161,16 +2220,18 @@ function handlePhotoUpload(input) {
   reader.onload = function(e) {
     preview.src = e.target.result;
     preview.classList.add('show');
-    icon.style.display    = 'none';
-    lbl.textContent       = '✓ Foto enviada com sucesso';
-    nome.textContent      = file.name;
+    placeholder.style.display = 'none';
+    nome.textContent = '✓ ' + file.name;
     box.classList.add('has-photo');
 
-    // Remove estado de erro se existia
+    // Remove estado de erro
     input.classList.remove('invalid');
     input.classList.add('valid');
-    const errSpan = input.parentElement.querySelector('.field-error-msg');
-    if (errSpan) { errSpan.textContent = ''; errSpan.classList.remove('show'); }
+    const field = input.closest('.field');
+    if (field) {
+      const errSpan = field.querySelector('.field-error-msg');
+      if (errSpan) { errSpan.textContent = ''; errSpan.classList.remove('show'); }
+    }
   };
   reader.readAsDataURL(file);
 }
@@ -2544,23 +2605,25 @@ function validateSection(secIdx) {
     const el = document.getElementById(id);
     if (!el) return;
     const val = el.value.trim();
+    // Usa closest('.field') para funcionar mesmo quando o input está dentro de sub-containers (ex: campo de foto)
+    const fieldEl = el.closest('.field') || el.parentElement;
     if (!val) {
       errors.push({ id, label, secIdx });
       el.classList.add('invalid');
       el.classList.remove('valid');
       // Show error message
-      let msg = el.parentElement.querySelector('.field-error-msg');
+      let msg = fieldEl.querySelector('.field-error-msg');
       if (!msg) {
         msg = document.createElement('span');
         msg.className = 'field-error-msg';
-        el.after(msg);
+        fieldEl.appendChild(msg);
       }
       msg.textContent = '⚠ Campo obrigatório';
       msg.classList.add('show');
     } else {
       el.classList.remove('invalid');
       el.classList.add('valid');
-      const msg = el.parentElement.querySelector('.field-error-msg');
+      const msg = fieldEl.querySelector('.field-error-msg');
       if (msg) msg.classList.remove('show');
     }
   });
@@ -2618,49 +2681,4 @@ function updateValidationUI(allErrors) {
     panel.classList.remove('show');
     btnPdf.disabled = false;
     if (btnNav) btnNav.disabled = false;
-    signArea.style.display = '';
-    finalTitle.textContent = '✅ Formulário completo!';
-    finalTitle.style.color = 'var(--verde)';
-    finalSubtitle.textContent = 'Todos os campos obrigatórios estão preenchidos. Assine e gere o PDF.';
-  } else {
-    panel.classList.add('show');
-    btnPdf.disabled = true;
-    if (btnNav) btnNav.disabled = true;
-    signArea.style.display = 'none';
-    finalTitle.textContent = `⚠️ ${allErrors.length} campo(s) obrigatório(s) pendente(s)`;
-    finalTitle.style.color = 'var(--vermelho)';
-    finalSubtitle.textContent = 'Corrija os campos indicados abaixo para habilitar o PDF.';
-
-    list.innerHTML = '';
-    allErrors.forEach(err => {
-      const li = document.createElement('li');
-      li.textContent = `Seção ${err.secIdx + 1} — ${sectionNames[err.secIdx]}: ${err.label}`;
-      li.addEventListener('click', () => {
-        goSection(err.secIdx);
-        if (!err.isRadio) {
-          const el = document.getElementById(err.id);
-          if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-        }
-      });
-      list.appendChild(li);
-    });
-  }
-}
-
-function updateSectionStatusGrid(allErrors) {
-  const grid = document.getElementById('section-status-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  sectionNames.forEach((name, i) => {
-    const errCount = allErrors.filter(e => e.secIdx === i).length;
-    const fields   = requiredFields[i] || [];
-    const radios   = requiredRadios[i] || [];
-    const hasRequired = fields.length + radios.length > 0;
-
-    const div = document.createElement('div');
-    div.className = 'sec-status ' + (
-      !hasRequired ? 'ok' :
-      errCount > 0 ? 'erro' : 'ok'
-    );
-    div.innerHTML = `<span class="dot"></span><span>${i + 1}. ${name}${errCount > 0 ? ` (${errCount})` : ''}</span>`;
-    div.addEventListener('
+   
