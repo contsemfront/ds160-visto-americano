@@ -1,0 +1,2658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DS-160 – Formulário de Visto Americano</title>
+  <style>
+    :root {
+      /* ── Paleta Sem Fronteiras Turismo ── */
+      --azul-escuro: #2E4F59;    /* teal escuro — headers, primário */
+      --azul-medio: #466B76;     /* teal médio — hover, barras */
+      --azul-claro: #699076;     /* verde sálvia — destaque, links */
+      --vermelho: #C0392B;       /* vermelho — erros e alertas */
+      --cinza-claro: #F4F6F4;   /* fundo geral com tom levemente quente */
+      --cinza-borda: #D8DDD6;   /* bordas e divisores */
+      --branco: #ffffff;
+      --texto: #4C4C4C;          /* carvão — texto principal */
+      --texto-leve: #7A8E88;    /* texto secundário levemente esverdeado */
+      --verde: #699076;          /* verde sálvia — sucesso */
+      --sombra: 0 2px 12px rgba(46,79,89,0.10);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--cinza-claro);
+      color: var(--texto);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .header-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      flex-shrink: 0;
+    }
+    .header-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.25);
+      flex-shrink: 0;
+    }
+    .header-flag {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .flag-stripe {
+      width: 6px;
+      height: 32px;
+      border-radius: 2px;
+    }
+    header h1 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    header p.subtitle {
+      font-size: 0.78rem;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      background: var(--azul-medio);
+      padding: 10px 32px;
+    }
+    .progress-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.78rem;
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      background: rgba(255,255,255,0.2);
+      border-radius: 99px;
+      height: 8px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      background: #60a5fa;
+      height: 100%;
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── SECTION TABS ── */
+    .tabs-wrap {
+      background: var(--branco);
+      border-bottom: 2px solid var(--cinza-borda);
+      overflow-x: auto;
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+      box-shadow: var(--sombra);
+    }
+    .tabs {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+      gap: 0;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 12px 14px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--texto-leve);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .tab-btn:hover { color: var(--azul-medio); }
+    .tab-btn.active {
+      color: var(--azul-escuro);
+      border-bottom-color: var(--vermelho);
+    }
+    .tab-num {
+      background: var(--cinza-claro);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .tab-btn.active .tab-num { background: var(--azul-escuro); color: var(--branco); }
+    .tab-btn.done .tab-num { background: var(--verde); color: var(--branco); }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* ── SECTION CARD ── */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .section-card {
+      background: var(--branco);
+      border-radius: 12px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .section-header {
+      background: var(--azul-escuro);
+      color: var(--branco);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-header .sec-icon {
+      font-size: 1.5rem;
+    }
+    .section-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .section-header p {
+      font-size: 0.78rem;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+    .section-body {
+      padding: 24px;
+    }
+
+    /* ── FIELD GROUPS ── */
+    .field-group {
+      margin-bottom: 20px;
+    }
+    .field-row {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .field-row.cols-1 { grid-template-columns: 1fr; }
+    .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+    .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .field-row.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--texto-leve);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    label .req { color: var(--vermelho); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      border: 1.5px solid var(--cinza-borda);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.9rem;
+      color: var(--texto);
+      background: var(--branco);
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--azul-claro);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: var(--vermelho);
+      box-shadow: 0 0 0 3px rgba(191,10,48,0.10);
+    }
+    textarea { resize: vertical; min-height: 70px; }
+
+    /* Radio & Checkbox groups */
+    .radio-group, .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .radio-option, .check-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      background: var(--cinza-claro);
+      border: 1.5px solid var(--cinza-borda);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .radio-option:hover, .check-option:hover {
+      border-color: var(--azul-claro);
+      background: #eff6ff;
+    }
+    .radio-option input, .check-option input { cursor: pointer; accent-color: var(--azul-escuro); }
+
+    /* Conditional blocks */
+    .conditional-block {
+      display: none;
+      background: #eff6ff;
+      border-left: 4px solid var(--azul-claro);
+      border-radius: 0 8px 8px 0;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .conditional-block.show { display: block; }
+
+    /* ── SUBSECTION TITLE ── */
+    .subsec-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--azul-escuro);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 2px solid var(--cinza-borda);
+      padding-bottom: 6px;
+      margin: 24px 0 16px;
+    }
+    .subsec-title:first-child { margin-top: 0; }
+
+    /* ── ALERT BOX ── */
+    .alert {
+      background: #fef9c3;
+      border-left: 4px solid #ca8a04;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      font-size: 0.85rem;
+      color: #78350f;
+      margin-bottom: 20px;
+    }
+    .alert-red {
+      background: #fef2f2;
+      border-left-color: var(--vermelho);
+      color: #7f1d1d;
+    }
+
+    /* ── REPEATABLE ROWS ── */
+    .repeat-row {
+      background: var(--cinza-claro);
+      border: 1.5px solid var(--cinza-borda);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .repeat-row .remove-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--vermelho);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .add-row-btn {
+      background: none;
+      border: 2px dashed var(--azul-claro);
+      border-radius: 8px;
+      color: var(--azul-claro);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s;
+      margin-top: 4px;
+    }
+    .add-row-btn:hover { background: #eff6ff; }
+
+    /* Social media grid */
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cinza-claro);
+      border: 1.5px solid var(--cinza-borda);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .social-item input[type="checkbox"] { accent-color: var(--azul-escuro); }
+    .social-item label { font-size: 0.82rem; font-weight: 600; text-transform: none; letter-spacing: 0; cursor: pointer; margin: 0; }
+    .social-item .social-user {
+      display: none;
+      margin-top: 6px;
+      width: 100%;
+    }
+    .social-item.checked { border-color: var(--azul-claro); background: #eff6ff; }
+    .social-item.checked .social-user { display: block; }
+
+    /* Yes/No questions */
+    .yn-question {
+      background: var(--cinza-claro);
+      border: 1.5px solid var(--cinza-borda);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .yn-question p {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+    .yn-btns { display: flex; gap: 10px; }
+    .yn-btn {
+      flex: 1;
+      padding: 8px;
+      border: 2px solid var(--cinza-borda);
+      border-radius: 8px;
+      background: var(--branco);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .yn-btn.sim:hover, .yn-btn.sim.selected { background: #fef2f2; border-color: var(--vermelho); color: var(--vermelho); }
+    .yn-btn.nao:hover, .yn-btn.nao.selected { background: #f0fdf4; border-color: var(--verde); color: var(--verde); }
+
+    /* ── NAVIGATION BUTTONS ── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 32px;
+      gap: 12px;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: var(--azul-escuro);
+      color: var(--branco);
+    }
+    .btn-primary:hover { background: var(--azul-medio); transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--branco);
+      color: var(--azul-escuro);
+      border: 2px solid var(--azul-escuro);
+    }
+    .btn-secondary:hover { background: var(--cinza-claro); }
+    .btn-success {
+      background: var(--verde);
+      color: var(--branco);
+    }
+    .btn-print {
+      background: var(--vermelho);
+      color: var(--branco);
+    }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* ── FINAL SECTION ── */
+    .final-box {
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .final-box h2 { font-size: 1.4rem; color: var(--azul-escuro); margin-bottom: 12px; }
+    .final-box p { color: var(--texto-leve); margin-bottom: 24px; }
+    .sign-area {
+      border: 2px dashed var(--cinza-borda);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 400px;
+      background: var(--cinza-claro);
+    }
+    .sign-area p { font-size: 0.8rem; margin-bottom: 16px; }
+    .sign-line {
+      border-bottom: 2px solid var(--texto);
+      width: 280px;
+      margin: 0 auto;
+      height: 40px;
+    }
+    .sign-label { font-size: 0.75rem; color: var(--texto-leve); margin-top: 6px; }
+
+    /* ── VALIDAÇÃO ── */
+    .field-error-msg {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--vermelho);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .field-error-msg.show { display: flex; align-items: center; gap: 4px; }
+    input.invalid, select.invalid, textarea.invalid {
+      border-color: var(--vermelho) !important;
+      background: #fff5f5;
+      box-shadow: 0 0 0 3px rgba(191,10,48,0.10);
+    }
+    input.valid, select.valid, textarea.valid {
+      border-color: var(--verde);
+    }
+
+    /* Badge de erro nas tabs */
+    .tab-badge {
+      background: var(--vermelho);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 800;
+      border-radius: 99px;
+      padding: 1px 5px;
+      margin-left: 3px;
+      vertical-align: middle;
+      display: none;
+    }
+    .tab-badge.show { display: inline; }
+    .tab-btn.has-error { color: var(--vermelho) !important; }
+    .tab-btn.has-error .tab-num { background: var(--vermelho); color: #fff; }
+
+    /* Painel de erros */
+    #validation-panel {
+      display: none;
+      background: #fef2f2;
+      border: 2px solid var(--vermelho);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    #validation-panel.show { display: block; }
+    #validation-panel h3 {
+      color: var(--vermelho);
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #validation-panel ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #validation-panel ul li {
+      font-size: 0.82rem;
+      color: #7f1d1d;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #validation-panel ul li:hover { text-decoration: underline; }
+    #validation-panel ul li::before { content: '→'; font-weight: 700; }
+
+    /* Botão PDF */
+    .btn-pdf {
+      background: linear-gradient(135deg, #2E4F59, #466B76);
+      color: #fff;
+      font-size: 1rem;
+      padding: 15px 36px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(0,40,104,0.25);
+      transition: all 0.2s;
+    }
+    .btn-pdf:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,79,89,0.35); }
+    .btn-pdf:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Overlay de geração */
+    #pdf-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(46,79,89,0.85);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      color: #fff;
+    }
+    #pdf-overlay.show { display: flex; }
+    #pdf-overlay p { font-size: 1.1rem; font-weight: 600; }
+    .pdf-spinner {
+      width: 48px; height: 48px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ══════════════════════════════════════
+       BOTÃO FLUTUANTE WHATSAPP
+    ══════════════════════════════════════ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    /* Balão de texto */
+    .whatsapp-bubble {
+      background: #fff;
+      border-radius: 12px 12px 0 12px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #1e293b;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .whatsapp-bubble.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .whatsapp-bubble span { color: #25D366; font-weight: 700; }
+
+    /* Botão principal */
+    .whatsapp-btn {
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(37,211,102,0.55);
+    }
+    .whatsapp-btn svg { width: 32px; height: 32px; }
+
+    /* Anel de pulso ao redor */
+    .whatsapp-btn::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 3px solid #25D366;
+      opacity: 0;
+      animation: wa-pulse 5s ease-in-out infinite;
+    }
+    .whatsapp-btn::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 3px solid #25D366;
+      opacity: 0;
+      animation: wa-pulse 5s ease-in-out 0.3s infinite;
+    }
+
+    /* Vibração a cada 5s */
+    @keyframes wa-vibrate {
+      0%,  89%, 100%  { transform: rotate(0deg); }
+      90%             { transform: rotate(-12deg); }
+      92%             { transform: rotate(12deg); }
+      94%             { transform: rotate(-10deg); }
+      96%             { transform: rotate(10deg); }
+      98%             { transform: rotate(-6deg); }
+      99%             { transform: rotate(6deg); }
+    }
+    /* Anel de pulso */
+    @keyframes wa-pulse {
+      0%,  85%, 100% { transform: scale(1);    opacity: 0; }
+      88%            { transform: scale(1.15); opacity: 0.6; }
+      95%            { transform: scale(1.35); opacity: 0; }
+    }
+
+    .whatsapp-btn {
+      animation: wa-vibrate 5s ease-in-out infinite;
+    }
+
+    /* Notificação / badge */
+    .whatsapp-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: #ff3b3b;
+      color: #fff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      animation: wa-badge 5s ease-in-out infinite;
+    }
+    @keyframes wa-badge {
+      0%,  89%, 100% { transform: scale(1); }
+      91%            { transform: scale(1.4); }
+      93%            { transform: scale(0.9); }
+      95%            { transform: scale(1.2); }
+      97%            { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .whatsapp-float { bottom: 88px; right: 16px; }
+      .whatsapp-btn { width: 54px; height: 54px; }
+      .whatsapp-btn svg { width: 28px; height: 28px; }
+    }
+
+    @media print {
+      .whatsapp-float { display: none !important; }
+    }
+
+    /* Status de completude */
+    .completion-bar {
+      background: var(--cinza-claro);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      border: 1.5px solid var(--cinza-borda);
+    }
+    .completion-bar h3 { font-size: 0.88rem; color: var(--texto-leve); margin-bottom: 10px; }
+    .section-status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+    }
+    .sec-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sec-status:hover { background: #e2e8f0; }
+    .sec-status .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sec-status.ok .dot { background: var(--verde); }
+    .sec-status.erro .dot { background: var(--vermelho); }
+    .sec-status.vazio .dot { background: #94a3b8; }
+
+    /* ── PRINT STYLES ── */
+    @media print {
+      header, .progress-wrap, .tabs-wrap, .nav-buttons,
+      .mobile-nav, #validation-panel, .completion-bar,
+      .btn-pdf, .btn-success, #pdf-overlay { display: none !important; }
+      .section { display: block !important; page-break-before: always; }
+      .section:first-child { page-break-before: auto; }
+      .section-card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 12px; }
+      .section-header { background: #002868 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { background: white; font-size: 10pt; }
+      input, select, textarea {
+        border: 1px solid #999 !important;
+        background: white !important;
+        box-shadow: none !important;
+      }
+      .radio-option, .check-option { border: 1px solid #ccc !important; background: white !important; }
+      .conditional-block { background: #f8f8f8 !important; }
+    }
+
+    /* ══════════════════════════════════════
+       MOBILE — tudo abaixo de 768px
+    ══════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* ── Colunas → single column ── */
+      .field-row.cols-2,
+      .field-row.cols-3,
+      .field-row.cols-4 { grid-template-columns: 1fr; }
+
+      /* ── Header compacto ── */
+      .header-inner { padding: 10px 16px; gap: 10px; }
+      .flag-stripe { width: 5px; height: 24px; }
+      .header-logo { height: 34px; }
+      .header-divider { height: 28px; }
+      header h1 { font-size: 0.82rem; line-height: 1.3; }
+      header p.subtitle { display: none; }
+
+      /* ── Progress bar ── */
+      .progress-wrap { padding: 8px 16px; }
+      .progress-info { font-size: 0.72rem; }
+
+      /* ── Tabs: scroll horizontal compacto ── */
+      .tabs-wrap {
+        position: sticky;
+        top: 56px;
+      }
+      .tabs { padding: 0 8px; gap: 2px; }
+      .tab-btn {
+        padding: 8px 10px 6px;
+        font-size: 0.68rem;
+        min-width: 52px;
+      }
+      .tab-num { width: 18px; height: 18px; font-size: 0.65rem; }
+
+      /* ── Main area — espaço para bottom nav ── */
+      .main { padding: 14px 12px 100px; }
+
+      /* ── Section cards ── */
+      .section-header { padding: 14px 16px; }
+      .section-header h2 { font-size: 0.95rem; }
+      .section-header p { font-size: 0.72rem; }
+      .section-body { padding: 16px 14px; }
+      .section-card { border-radius: 10px; }
+
+      /* ── Inputs maiores para touch ── */
+      input[type="text"],
+      input[type="date"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"],
+      select,
+      textarea {
+        font-size: 1rem;
+        padding: 11px 12px;
+        border-radius: 10px;
+      }
+
+      /* ── Labels ── */
+      label { font-size: 0.75rem; }
+
+      /* ── Radio/checkbox: área de toque maior ── */
+      .radio-group { flex-direction: column; gap: 8px; }
+      .radio-option, .check-option {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .radio-option input, .check-option input {
+        width: 18px; height: 18px;
+      }
+
+      /* ── Social grid: 2 colunas ── */
+      .social-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .social-item { padding: 10px 8px; }
+      .social-item label { font-size: 0.75rem; }
+
+      /* ── YN questions ── */
+      .yn-question { padding: 12px; }
+      .yn-question p { font-size: 0.85rem; }
+      .yn-btn { padding: 12px 8px; font-size: 0.85rem; }
+
+      /* ── Nav buttons (desktop) → ocultos no mobile ── */
+      .nav-buttons { display: none; }
+
+      /* ── Botões de adicionar linha ── */
+      .add-row-btn { padding: 14px; font-size: 0.9rem; }
+
+      /* ── Alert ── */
+      .alert { font-size: 0.8rem; padding: 10px 12px; }
+
+      /* ── Subsec title ── */
+      .subsec-title { font-size: 0.8rem; }
+
+      /* ── Final box ── */
+      .final-box { padding: 24px 12px; }
+      .final-box h2 { font-size: 1.1rem; }
+    }
+
+    /* ── BOTTOM NAV BAR (mobile only) ── */
+    .mobile-nav {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: var(--branco);
+        border-top: 2px solid var(--cinza-borda);
+        padding: 10px 16px;
+        gap: 10px;
+        z-index: 200;
+        box-shadow: 0 -4px 16px rgba(0,0,0,0.10);
+      }
+      .mobile-nav .btn {
+        flex: 1;
+        justify-content: center;
+        padding: 14px 10px;
+        font-size: 0.9rem;
+        border-radius: 12px;
+      }
+      .mobile-nav-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        min-width: 60px;
+      }
+      .mobile-nav-center span {
+        font-size: 0.65rem;
+        color: var(--texto-leve);
+        font-weight: 600;
+      }
+      .mobile-nav-center strong {
+        font-size: 0.9rem;
+        color: var(--azul-escuro);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <!-- Logo SVG inline — funciona offline, fiel ao design original -->
+    <svg class="header-logo" viewBox="0 0 160 90" xmlns="http://www.w3.org/2000/svg" style="height:54px;width:auto;flex-shrink:0;">
+      <!-- Fundo arredondado na cor da marca -->
+      <rect width="160" height="90" rx="6" fill="#466B76"/>
+      <!-- Texto escalonado em tipografia serifada — fiel ao layout original -->
+      <text font-family="Georgia, 'Times New Roman', serif" fill="#D6E0DD" letter-spacing="2">
+        <tspan x="14"  y="28"  font-size="19" font-weight="400">SEM</tspan>
+        <tspan x="22"  y="47"  font-size="19" font-weight="400">FRON</tspan>
+        <tspan x="30"  y="66"  font-size="19" font-weight="400">TEI</tspan>
+        <tspan x="38"  y="85"  font-size="19" font-weight="400">RAS</tspan>
+        <tspan x="94"  y="85"  font-size="7.5" letter-spacing="1.5" font-weight="400">TURISMO</tspan>
+      </text>
+    </svg>
+    <div class="header-divider"></div>
+    <div>
+      <h1>DS-160 — Formulário de Solicitação de Visto Americano</h1>
+      <p class="subtitle">Sem Fronteiras Turismo &nbsp;·&nbsp; Coleta de dados para o processo de visto de não-imigrante</p>
+    </div>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-info">
+      <span id="progress-label">Seção 1 de 11 — Informações Pessoais</span>
+      <span id="progress-pct">9%</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-fill" style="width:9%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs" id="tabs-container">
+    <button class="tab-btn active" data-section="0" onclick="goSection(0)">
+      <span class="tab-num">1</span>Pessoal
+    </button>
+    <button class="tab-btn" data-section="1" onclick="goSection(1)">
+      <span class="tab-num">2</span>Mídia Social
+    </button>
+    <button class="tab-btn" data-section="2" onclick="goSection(2)">
+      <span class="tab-num">3</span>Endereço
+    </button>
+    <button class="tab-btn" data-section="3" onclick="goSection(3)">
+      <span class="tab-num">4</span>Passaporte
+    </button>
+    <button class="tab-btn" data-section="4" onclick="goSection(4)">
+      <span class="tab-num">5</span>Viagem EUA
+    </button>
+    <button class="tab-btn" data-section="5" onclick="goSection(5)">
+      <span class="tab-num">6</span>Companheiros
+    </button>
+    <button class="tab-btn" data-section="6" onclick="goSection(6)">
+      <span class="tab-num">7</span>Viagens Ant.
+    </button>
+    <button class="tab-btn" data-section="7" onclick="goSection(7)">
+      <span class="tab-num">8</span>Contatos EUA
+    </button>
+    <button class="tab-btn" data-section="8" onclick="goSection(8)">
+      <span class="tab-num">9</span>Familiares
+    </button>
+    <button class="tab-btn" data-section="9" onclick="goSection(9)">
+      <span class="tab-num">10</span>Ocupação
+    </button>
+    <button class="tab-btn" data-section="10" onclick="goSection(10)">
+      <span class="tab-num">11</span>Seg. &amp; Med.
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     MAIN CONTENT
+═════════════════════════════════════════════ -->
+<div class="main">
+
+<!-- ─── SEÇÃO 1: INFORMAÇÕES PESSOAIS ─── -->
+<div class="section active" id="section-0">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">👤</span>
+      <div>
+        <h2>Informações Pessoais</h2>
+        <p>Preencha exatamente como consta no passaporte</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="subsec-title">Dados de Identificação</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Sobrenome(s) <span class="req">*</span></label>
+          <input type="text" id="sobrenome" placeholder="Exatamente como no passaporte" required />
+        </div>
+        <div class="field">
+          <label>Nome(s) <span class="req">*</span></label>
+          <input type="text" id="nome" placeholder="Exatamente como no passaporte" required />
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Nome Completo <span class="req">*</span></label>
+          <input type="text" id="nomeCompleto" placeholder="Nome completo exatamente como no passaporte" required />
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você já usou outros nomes? (solteira, religioso, profissional, pseudônimo) <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="outrosNomes" value="nao" onchange="toggleBlock('block-outros-nomes', false)" checked /> Não
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="outrosNomes" value="sim" onchange="toggleBlock('block-outros-nomes', true)" /> Sim
+            </label>
+          </div>
+          <div class="conditional-block" id="block-outros-nomes">
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Outros Sobrenomes utilizados</label>
+                <input type="text" id="outrosSobrenomes" placeholder="Informe os sobrenomes" />
+              </div>
+              <div class="field">
+                <label>Outros Nomes utilizados</label>
+                <input type="text" id="outrosNomesList" placeholder="Informe os nomes" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Sexo <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="sexo" value="M" required /> Masculino</label>
+            <label class="radio-option"><input type="radio" name="sexo" value="F" /> Feminino</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Estado Civil <span class="req">*</span></label>
+          <select id="estadoCivil" onchange="toggleConjuge()" required>
+            <option value="">Selecione...</option>
+            <option value="casado">Casado(a)</option>
+            <option value="solteiro">Solteiro(a)</option>
+            <option value="viuvo">Viúvo(a)</option>
+            <option value="divorciado">Divorciado(a)</option>
+            <option value="separado">Separado(a) Legalmente</option>
+            <option value="uniao">União Estável</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="subsec-title">Data e Local de Nascimento</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Data de Nascimento <span class="req">*</span></label>
+          <input type="date" id="dataNasc" required />
+        </div>
+        <div class="field">
+          <label>Cidade de Nascimento <span class="req">*</span></label>
+          <input type="text" id="cidadeNasc" required />
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Estado de Nascimento</label>
+          <input type="text" id="estadoNasc" />
+        </div>
+        <div class="field">
+          <label>País de Nascimento <span class="req">*</span></label>
+          <input type="text" id="paisNasc" required />
+        </div>
+        <div class="field">
+          <label>Nacionalidade <span class="req">*</span></label>
+          <input type="text" id="nacionalidade" required />
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Possui outra nacionalidade além da indicada? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="outraNacionalidade" value="nao" onchange="toggleBlock('block-outra-nac', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="outraNacionalidade" value="sim" onchange="toggleBlock('block-outra-nac', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-outra-nac">
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Outra Nacionalidade</label>
+                <input type="text" id="outraNacText" placeholder="Informe a nationalidade" />
+              </div>
+              <div class="field">
+                <label>Nº Passaporte (se válido) e Validade</label>
+                <input type="text" id="passOutraNac" placeholder="Ex: AB123456 – 01/2030" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsec-title">Documentos</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>CPF <span class="req">*</span></label>
+          <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14" />
+        </div>
+        <div class="field">
+          <label>RG (menores: informar do responsável)</label>
+          <input type="text" id="rg" placeholder="Número do RG" />
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Social Security U.S.A. <small>(apenas quem morou nos EUA)</small></label>
+          <input type="text" id="ssn" placeholder="Não se aplica se nunca morou nos EUA" />
+        </div>
+        <div class="field">
+          <label>Identificação Fiscal U.S.A. <small>(apenas quem morou nos EUA)</small></label>
+          <input type="text" id="taxId" placeholder="Não se aplica se nunca morou nos EUA" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" disabled>← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(1)">Próximo: Mídia Social →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 2: MÍDIA SOCIAL ─── -->
+<div class="section" id="section-1">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">📱</span>
+      <div>
+        <h2>Mídia Social</h2>
+        <p>Plataformas utilizadas nos últimos 5 anos</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="alert">
+        Selecione cada plataforma que você usou nos últimos <strong>5 anos</strong> e informe seu nome de usuário/identificador. Não forneça senhas.
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você tem presença em mídia social? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="temSocial" value="nao" onchange="toggleBlock('block-social', false)" checked /> Nenhuma presença / Não se aplica</label>
+            <label class="radio-option"><input type="radio" name="temSocial" value="sim" onchange="toggleBlock('block-social', true)" /> Sim, possuo</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="conditional-block" id="block-social">
+        <div class="social-grid" id="social-grid">
+          <!-- Platforms will be injected by JS -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(0)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(2)">Próximo: Endereço →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 3: ENDEREÇO E CONTATOS ─── -->
+<div class="section" id="section-2">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">🏠</span>
+      <div>
+        <h2>Endereço e Contatos</h2>
+        <p>Endereço residencial, contatos e telefones</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="subsec-title">Endereço Residencial</div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Rua / Avenida / Número / Apto / Bloco <span class="req">*</span></label>
+          <input type="text" id="endRua" required />
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Bairro <span class="req">*</span></label>
+          <input type="text" id="endBairro" required />
+        </div>
+        <div class="field">
+          <label>Cidade <span class="req">*</span></label>
+          <input type="text" id="endCidade" required />
+        </div>
+        <div class="field">
+          <label>Estado <span class="req">*</span></label>
+          <input type="text" id="endEstado" required />
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>CEP <span class="req">*</span></label>
+          <input type="text" id="endCep" placeholder="00000-000" maxlength="9" required />
+        </div>
+        <div class="field">
+          <label>País <span class="req">*</span></label>
+          <input type="text" id="endPais" value="Brasil" required />
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Este é o endereço para envio do passaporte após o processo? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="envioPassaporte" value="sim" onchange="toggleBlock('block-end-passaporte', false)" checked /> Sim</label>
+            <label class="radio-option"><input type="radio" name="envioPassaporte" value="nao" onchange="toggleBlock('block-end-passaporte', true)" /> Não — informar outro endereço</label>
+          </div>
+          <div class="conditional-block" id="block-end-passaporte">
+            <div class="subsec-title" style="margin-top:0">Endereço para Envio do Passaporte</div>
+            <div class="field-row cols-1">
+              <div class="field">
+                <label>Rua / Avenida / Apto / Número</label>
+                <input type="text" id="passEndRua" />
+              </div>
+            </div>
+            <div class="field-row cols-3">
+              <div class="field"><label>Bairro</label><input type="text" id="passEndBairro" /></div>
+              <div class="field"><label>Cidade</label><input type="text" id="passEndCidade" /></div>
+              <div class="field"><label>Estado</label><input type="text" id="passEndEstado" /></div>
+            </div>
+            <div class="field-row cols-2">
+              <div class="field"><label>CEP</label><input type="text" id="passEndCep" /></div>
+              <div class="field"><label>País</label><input type="text" id="passEndPais" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsec-title">Telefones e E-mail</div>
+      <div class="alert">O telefone residencial é <strong>obrigatório</strong>. Para os demais, se não possuir, informe "Não se aplica".</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>1º Telefone — Residencial com DDD <span class="req">*</span></label>
+          <input type="tel" id="tel1" placeholder="(00) 0000-0000" required />
+        </div>
+        <div class="field">
+          <label>2º Telefone — Celular com DDD</label>
+          <input type="tel" id="tel2" placeholder="(00) 90000-0000" />
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Telefone do Trabalho / Escola com DDD</label>
+          <input type="tel" id="telTrabalho" placeholder="Não se aplica, se não possuir" />
+        </div>
+        <div class="field">
+          <label>E-mail <span class="req">*</span></label>
+          <input type="email" id="email" required />
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(1)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(3)">Próximo: Passaporte →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 4: PASSAPORTE ─── -->
+<div class="section" id="section-3">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">📗</span>
+      <div>
+        <h2>Dados do Passaporte</h2>
+        <p>Informações do documento de viagem</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Tipo do Passaporte <span class="req">*</span></label>
+          <select id="tipoPassaporte" required>
+            <option value="">Selecione...</option>
+            <option value="regular">Regular</option>
+            <option value="diplomatico">Diplomático</option>
+            <option value="oficial">Oficial</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Série e Número do Passaporte <span class="req">*</span></label>
+          <input type="text" id="numPassaporte" placeholder="Ex: AA123456" required />
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Número de Controle (Book Number)</label>
+          <input type="text" id="bookNumber" placeholder="Não se aplica para Passaporte Brasileiro" />
+        </div>
+        <div class="field">
+          <label>País Emissor do Passaporte <span class="req">*</span></label>
+          <input type="text" id="passEmissorPais" value="Brasil" required />
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Cidade de Emissão <span class="req">*</span></label>
+          <input type="text" id="passEmissorCidade" required />
+        </div>
+        <div class="field">
+          <label>Estado de Emissão</label>
+          <input type="text" id="passEmissorEstado" />
+        </div>
+        <div class="field">
+          <label>País de Emissão <span class="req">*</span></label>
+          <input type="text" id="passEmissorPais2" value="Brasil" required />
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Data de Emissão (dd/mm/aaaa) <span class="req">*</span></label>
+          <input type="date" id="passDataEmissao" required />
+        </div>
+        <div class="field">
+          <label>Data de Vencimento (dd/mm/aaaa) <span class="req">*</span></label>
+          <input type="date" id="passDataVenc" required />
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você já teve algum passaporte roubado ou perdido? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="passRoubado" value="nao" onchange="toggleBlock('block-pass-roubado', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="passRoubado" value="sim" onchange="toggleBlock('block-pass-roubado', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-pass-roubado">
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Número do passaporte roubado/perdido</label>
+                <input type="text" id="numPassRoubado" placeholder="Se não souber, informar NÃO SEI" />
+              </div>
+              <div class="field">
+                <label>País emissor do passaporte roubado/perdido</label>
+                <input type="text" id="paisPassRoubado" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(2)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(4)">Próximo: Viagem EUA →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 5: VIAGEM AOS EUA ─── -->
+<div class="section" id="section-4">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">✈️</span>
+      <div>
+        <h2>Informações sobre a Viagem aos EUA</h2>
+        <p>Tipo de visto, datas e destino</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você é o aplicante principal deste pedido? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="aplicantePrincipal" value="sim" onchange="toggleViagem(true)" checked /> Sim — sou o aplicante principal</label>
+            <label class="radio-option"><input type="radio" name="aplicantePrincipal" value="nao" onchange="toggleViagem(false)" /> Não — estou acompanhando cônjuge/parente</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="block-aplicante-principal">
+        <div class="subsec-title">Tipo de Visto Requerido</div>
+        <div class="field-row cols-1">
+          <div class="field">
+            <label>Selecione o motivo da viagem / visto requerido <span class="req">*</span></label>
+            <div class="radio-group" style="flex-direction:column; align-items:flex-start;">
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="B1" /> Negócios, Conferência (B1)</label>
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="B2" /> Turismo, Visita Familiar (B2)</label>
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="B1B2" /> Negócios e Turismo (B1/B2)</label>
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="BCC" /> Visto de Fronteira (BCC)</label>
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="estudante" /> Estudante (F, J, M, Q)</label>
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="outros" /> Outros — especificar</label>
+            </div>
+            <div class="conditional-block show" id="block-visto-outros" style="display:none; margin-top:8px">
+              <input type="text" id="tipoVistoOutros" placeholder="Especifique a categoria/classificação do visto" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="block-acompanhante" style="display:none">
+        <div class="alert">Preencha os dados do aplicante principal (cônjuge ou parente que irá trabalhar ou estudar nos EUA).</div>
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>Sobrenome do Aplicante Principal <span class="req">*</span></label>
+            <input type="text" id="apPrincipalSobrenome" />
+          </div>
+          <div class="field">
+            <label>Nome do Aplicante Principal <span class="req">*</span></label>
+            <input type="text" id="apPrincipalNome" />
+          </div>
+        </div>
+        <div class="field-row cols-1">
+          <div class="field">
+            <label>Categoria do visto requerido pelo aplicante principal</label>
+            <div class="radio-group" style="flex-direction:column; align-items:flex-start;">
+              <label class="radio-option"><input type="radio" name="vistoAcomp" value="estudante" /> Estudante (F, J, M, Q) — informar SEVIS ID</label>
+              <label class="radio-option"><input type="radio" name="vistoAcomp" value="outros" /> Outros — informar número da Petição (L, H)</label>
+            </div>
+          </div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field">
+            <label>SEVIS ID / Nº da Petição</label>
+            <input type="text" id="sevisId" placeholder="Número da SEVIS ID ou petição" />
+          </div>
+        </div>
+      </div>
+
+      <div class="subsec-title">Dados da Viagem</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Data pretendida de chegada nos EUA <span class="req">*</span></label>
+          <input type="date" id="dataChegadaEUA" required />
+          <small style="color:var(--texto-leve); font-size:0.75rem">Se não souber, informe uma data pretendida</small>
+        </div>
+        <div class="field">
+          <label>Tempo de permanência pretendido <span class="req">*</span></label>
+          <input type="text" id="tempoPermanencia" placeholder="Ex: 15 dias, 1 mês" required />
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Endereço pretendido nos EUA (Rua / Av / Nº / Cidade / Estado / CEP) <span class="req">*</span></label>
+          <textarea id="endEUA" placeholder="Se não tiver, informe um destino pretendido" required></textarea>
+        </div>
+      </div>
+
+      <div class="subsec-title">Pagamento da Viagem</div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Quem vai pagar sua viagem? <span class="req">*</span></label>
+          <div class="radio-group" style="flex-direction:column; align-items:flex-start;">
+            <label class="radio-option"><input type="radio" name="pagadorViagem" value="proprio" onchange="showPagador('proprio')" checked /> Recursos próprios — eu mesmo pagarei minhas despesas</label>
+            <label class="radio-option"><input type="radio" name="pagadorViagem" value="pessoa" onchange="showPagador('pessoa')" /> Outra pessoa (física) pagará as despesas</label>
+            <label class="radio-option"><input type="radio" name="pagadorViagem" value="empresa" onchange="showPagador('empresa')" /> Empresa / Cia / Organização pagará a viagem</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="conditional-block" id="block-pagador-pessoa">
+        <div class="field-row cols-2">
+          <div class="field"><label>Sobrenome da pessoa</label><input type="text" id="pagPessoaSobrenome" /></div>
+          <div class="field"><label>Nome da pessoa</label><input type="text" id="pagPessoaNome" /></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Telefone com DDD</label><input type="tel" id="pagPessoaTel" /></div>
+          <div class="field"><label>E-mail (ou "Não se aplica")</label><input type="email" id="pagPessoaEmail" /></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Parentesco com o requerente</label><input type="text" id="pagPessoaParentesco" /></div>
+          <div class="field"><label>Endereço completo</label><input type="text" id="pagPessoaEnd" placeholder="Se mesmo do aplicante, escrever: mesmo endereço do aplicante" /></div>
+        </div>
+      </div>
+
+      <div class="conditional-block" id="block-pagador-empresa">
+        <div class="field-row cols-2">
+          <div class="field"><label>Nome completo da empresa / organização</label><input type="text" id="pagEmpresaNome" /></div>
+          <div class="field"><label>Telefone da empresa com DDD</label><input type="tel" id="pagEmpresaTel" /></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Relação da empresa com o requerente</label><input type="text" id="pagEmpresaRelacao" /></div>
+          <div class="field"><label>Endereço completo da empresa</label><input type="text" id="pagEmpresaEnd" /></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(3)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(5)">Próximo: Companheiros →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 6: COMPANHEIROS DE VIAGEM ─── -->
+<div class="section" id="section-5">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">👨‍👩‍👧</span>
+      <div>
+        <h2>Companheiros de Viagem</h2>
+        <p>Pessoas que viajarão junto com você</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Existem outras pessoas viajando com você? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="temCompanheiros" value="nao" onchange="toggleBlock('block-companheiros', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="temCompanheiros" value="sim" onchange="toggleBlock('block-companheiros', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-companheiros">
+            <div id="companheiros-list"></div>
+            <button class="add-row-btn" onclick="addCompanheiro()">+ Adicionar Companheiro</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você está viajando com um grupo ou organização? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="temGrupo" value="nao" onchange="toggleBlock('block-grupo', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="temGrupo" value="sim" onchange="toggleBlock('block-grupo', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-grupo">
+            <div class="field">
+              <label>Nome do Grupo ou Organização</label>
+              <input type="text" id="nomeGrupo" placeholder="Informe o nome do grupo/organização" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(4)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(6)">Próximo: Viagens Anteriores →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 7: VIAGENS ANTERIORES AOS EUA ─── -->
+<div class="section" id="section-6">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">🗺️</span>
+      <div>
+        <h2>Viagens Anteriores aos EUA</h2>
+        <p>Histórico de visitas, visto anterior e carteira de habilitação americana</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você já esteve nos EUA? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="jáEsteve" value="nao" onchange="toggleBlock('block-visitas-eua', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="jáEsteve" value="sim" onchange="toggleBlock('block-visitas-eua', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-visitas-eua">
+            <p style="font-size:0.85rem; margin-bottom:12px; color:var(--texto-leve)">Informe suas <strong>5 últimas visitas</strong>:</p>
+            <div id="visitas-list"></div>
+            <button class="add-row-btn" onclick="addVisita()">+ Adicionar Visita</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você possui carteira de habilitação americana? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="habilitacaoEUA" value="nao" onchange="toggleBlock('block-hab-eua', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="habilitacaoEUA" value="sim" onchange="toggleBlock('block-hab-eua', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-hab-eua">
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Número da Licença (se não souber: "NÃO SEI")</label>
+                <input type="text" id="numHabEUA" />
+              </div>
+              <div class="field">
+                <label>Estado emissor da Licença</label>
+                <input type="text" id="estadoHabEUA" placeholder="Ex: Florida, California" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você já teve um visto EUA emitido? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="vistoAnterior" value="nao" onchange="toggleBlock('block-visto-ant', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="vistoAnterior" value="sim" onchange="toggleBlock('block-visto-ant', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-visto-ant">
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Data do último visto emitido</label>
+                <input type="date" id="dataUltimoVisto" />
+              </div>
+              <div class="field">
+                <label>Número do visto (em vermelho no visto)</label>
+                <input type="text" id="numUltimoVisto" />
+              </div>
+            </div>
+            <div class="field-row cols-1">
+              <div class="field">
+                <label>Verificações do visto anterior</label>
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:6px">
+                  <label class="radio-option" style="width:100%; justify-content:flex-start">
+                    <input type="checkbox" id="mesmoTipoVisto" /> Está aplicando para o mesmo tipo de visto (igual ao anterior)?
+                  </label>
+                  <label class="radio-option" style="width:100%; justify-content:flex-start">
+                    <input type="checkbox" id="mesmoPaisVisto" /> Está aplicando no mesmo país onde o visto anterior foi emitido e este é sua principal residência?
+                  </label>
+                  <label class="radio-option" style="width:100%; justify-content:flex-start">
+                    <input type="checkbox" id="digitaisVisto" /> Forneceu digitais de todos os dedos na obtenção do último visto?
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Algum visto EUA já foi roubado, perdido ou cancelado? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="vistoRoubado" value="nao" onchange="toggleBlock('block-visto-roubo', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="vistoRoubado" value="sim" onchange="toggleBlock('block-visto-roubo', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-visto-roubo">
+            <div class="field-row cols-2">
+              <div class="field"><label>Tipo do ocorrido</label>
+                <select id="tipoOcorridoVisto">
+                  <option value="">Selecione...</option>
+                  <option value="roubado">Roubado / Extraviado</option>
+                  <option value="cancelado">Cancelado ou Revogado</option>
+                </select>
+              </div>
+              <div class="field"><label>Ano do ocorrido</label><input type="text" id="anoOcorridoVisto" placeholder="Ano" /></div>
+            </div>
+            <div class="field"><label>Detalhes (onde, quando, tipo)</label><textarea id="detalhesOcorridoVisto"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Alguma vez lhe foi recusado visto EUA ou negada admissão nos EUA? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="vistoRecusado" value="nao" onchange="toggleBlock('block-visto-recusado', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="vistoRecusado" value="sim" onchange="toggleBlock('block-visto-recusado', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-visto-recusado">
+            <div class="field"><label>Detalhes (onde, quando, tipo de visto recusado)</label><textarea id="detalhesVistoRecusado"></textarea></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Alguma vez entrou com pedido de imigrante ou cidadão EUA em seu nome? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="pedidoImigrante" value="nao" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="pedidoImigrante" value="sim" /> Sim</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(5)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(7)">Próximo: Contatos EUA →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 8: CONTATOS NOS EUA ─── -->
+<div class="section" id="section-7">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">📋</span>
+      <div>
+        <h2>Contatos nos EUA</h2>
+        <p>Parentes, amigos ou contatos comerciais nos Estados Unidos</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field-row cols-2">
+        <div class="field"><label>Sobrenome(s) do Contato <span class="req">*</span></label><input type="text" id="contatoEUASobrenome" /></div>
+        <div class="field"><label>Nome(s) do Contato <span class="req">*</span></label><input type="text" id="contatoEUANome" /></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Nome da Empresa / Organização</label><input type="text" id="contatoEUAEmpresa" placeholder="Se pessoa física, deixar em branco" /></div>
+        <div class="field"><label>Relação / Parentesco com você <span class="req">*</span></label><input type="text" id="contatoEUARelacao" placeholder="Ex: amigo, tio, parceiro comercial" /></div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field"><label>Endereço completo nos EUA (Rua / Av. / Nº / Bairro / Cidade / Estado / CEP) <span class="req">*</span></label><textarea id="contatoEUAEndereco" placeholder="Endereço completo nos EUA"></textarea></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Telefone com DDD (EUA)</label><input type="tel" id="contatoEUATel" placeholder="+1 (000) 000-0000" /></div>
+        <div class="field"><label>E-mail (ou "Não se Aplica")</label><input type="email" id="contatoEUAEmail" /></div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(6)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(8)">Próximo: Familiares →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 9: FAMILIARES ─── -->
+<div class="section" id="section-8">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">👨‍👩‍👦</span>
+      <div>
+        <h2>Informações sobre Familiares</h2>
+        <p>Dados de pais, cônjuge e parentes nos EUA</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="subsec-title">Dados do Pai</div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Nome completo do Pai <span class="req">*</span></label><input type="text" id="paiNome" required /></div>
+        <div class="field"><label>Data de Nascimento</label><input type="date" id="paiNasc" /></div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Seu pai está nos EUA?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="paiEUA" value="nao" onchange="toggleBlock('block-pai-eua', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="paiEUA" value="sim" onchange="toggleBlock('block-pai-eua', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-pai-eua">
+            <div class="field">
+              <label>Situação do pai nos EUA</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="paiSituacaoEUA" value="citizen" /> U.S. Citizen</label>
+                <label class="radio-option"><input type="radio" name="paiSituacaoEUA" value="resident" /> U.S. Legal Permanent Resident</label>
+                <label class="radio-option"><input type="radio" name="paiSituacaoEUA" value="nonimmigrant" /> Nonimmigrant</label>
+                <label class="radio-option"><input type="radio" name="paiSituacaoEUA" value="outros" /> Outros / Não sei</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsec-title">Dados da Mãe</div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Nome completo da Mãe <span class="req">*</span></label><input type="text" id="maeNome" required /></div>
+        <div class="field"><label>Data de Nascimento</label><input type="date" id="maeNasc" /></div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Sua mãe está nos EUA?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="maeEUA" value="nao" onchange="toggleBlock('block-mae-eua', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="maeEUA" value="sim" onchange="toggleBlock('block-mae-eua', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-mae-eua">
+            <div class="field">
+              <label>Situação da mãe nos EUA</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="maeSituacaoEUA" value="citizen" /> U.S. Citizen</label>
+                <label class="radio-option"><input type="radio" name="maeSituacaoEUA" value="resident" /> U.S. Legal Permanent Resident</label>
+                <label class="radio-option"><input type="radio" name="maeSituacaoEUA" value="nonimmigrant" /> Nonimmigrant</label>
+                <label class="radio-option"><input type="radio" name="maeSituacaoEUA" value="outros" /> Outros / Não sei</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsec-title">Parentes Imediatos nos EUA (exceto pais)</div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Você tem parente imediato nos EUA (exceto pais)?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="parenteEUA" value="nao" onchange="toggleBlock('block-parente-eua', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="parenteEUA" value="sim" onchange="toggleBlock('block-parente-eua', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-parente-eua">
+            <div class="field-row cols-2">
+              <div class="field"><label>Nome completo do parente</label><input type="text" id="parenteEUANome" /></div>
+              <div class="field"><label>Parentesco</label><input type="text" id="parenteEUAParentesco" /></div>
+            </div>
+            <div class="field">
+              <label>Situação do parente nos EUA</label>
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="parenteSituacao" value="citizen" /> U.S. Citizen</label>
+                <label class="radio-option"><input type="radio" name="parenteSituacao" value="resident" /> U.S. Legal Permanent Resident</label>
+                <label class="radio-option"><input type="radio" name="parenteSituacao" value="nonimmigrant" /> Nonimmigrant</label>
+                <label class="radio-option"><input type="radio" name="parenteSituacao" value="outros" /> Outros / Não sei</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsec-title" id="subsec-conjuge">Dados do Cônjuge / Ex-Cônjuge</div>
+      <div id="block-conjuge-info">
+        <div class="alert">Preencha se casado(a), em união estável, divorciado(a), separado(a) ou viúvo(a). Se solteiro(a), deixe em branco.</div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Nome completo</label><input type="text" id="conjugeNome" /></div>
+          <div class="field"><label>Data de Nascimento</label><input type="date" id="conjugeNasc" /></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Nacionalidade</label><input type="text" id="conjugeNac" /></div>
+          <div class="field"><label>Cidade de Nascimento</label><input type="text" id="conjugeCidade" /></div>
+        </div>
+        <div class="field-row cols-2">
+          <div class="field"><label>Data do Casamento</label><input type="date" id="conjugeDataCas" /></div>
+          <div class="field"><label>Data do Divórcio / Separação (se aplicável)</label><input type="date" id="conjugeDataDiv" /></div>
+        </div>
+        <div class="field-row cols-1">
+          <div class="field">
+            <label>Se divorciado(a) ou separado(a), explique o motivo</label>
+            <textarea id="conjugeMotivoDiv" placeholder="Deixar em branco se não divorciado/separado"></textarea>
+          </div>
+        </div>
+        <div class="field-row cols-1">
+          <div class="field">
+            <label>Endereço completo do cônjuge</label>
+            <select id="conjugeEndOpcao">
+              <option value="mesmo">Mesmo endereço do aplicante</option>
+              <option value="contatoEUA">Mesmo endereço do contato nos EUA</option>
+              <option value="naoSei">Não sei</option>
+              <option value="outro">Outro endereço — informar abaixo</option>
+            </select>
+            <div class="conditional-block" id="block-conjuge-end" style="margin-top:8px">
+              <input type="text" id="conjugeEndOutro" placeholder="Endereço completo do cônjuge" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(7)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(9)">Próximo: Ocupação →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 10: OCUPAÇÃO ─── -->
+<div class="section" id="section-9">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">💼</span>
+      <div>
+        <h2>Informações sobre Ocupação</h2>
+        <p>Emprego atual e ocupações anteriores</p>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="subsec-title">Ocupação Atual</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Ocupação atual <span class="req">*</span></label>
+          <input type="text" id="ocupacaoAtual" placeholder="Se desempregado, explique" required />
+        </div>
+        <div class="field">
+          <label>Nome completo da empresa / escola</label>
+          <input type="text" id="empresaAtual" placeholder="Se trabalhar ou estudar" />
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Endereço completo (Rua / Av. / Nº / Bairro / Cidade / Estado / CEP / País)</label>
+          <textarea id="endEmpresaAtual"></textarea>
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Descreva brevemente suas funções diárias <span class="req">*</span></label>
+          <textarea id="funcoesAtual" placeholder="Estudantes: informar ano/série/curso que frequentam" required></textarea>
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field"><label>Salário Mensal (R$)</label><input type="text" id="salarioAtual" placeholder="Ex: R$ 5.000,00" /></div>
+        <div class="field"><label>Data de Início (dia/mês/ano)</label><input type="date" id="dataInicioAtual" /></div>
+        <div class="field"><label>Telefone Comercial com DDD</label><input type="tel" id="telComercial" /></div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field"><label>Fax Comercial com DDD</label><input type="text" id="faxComercial" placeholder="Se não possuir: Não se aplica" /></div>
+        <div class="field"><label>E-mail Comercial</label><input type="email" id="emailComercial" /></div>
+      </div>
+
+      <div class="subsec-title">Ocupações Anteriores</div>
+      <div class="alert">
+        Obrigatório para: <strong>Homens</strong> entre 16 e 61 anos (ou aposentados há menos de 5 anos com registro) e <strong>Mulheres</strong> aposentadas/do lar há menos de 5 anos ou solicitantes de visto de estudos (J/F/M/Q). Informe os <strong>2 últimos empregos</strong> (não incluir o atual).
+      </div>
+
+      <div id="empregos-anteriores-list"></div>
+      <button class="add-row-btn" onclick="addEmpregoAnterior()">+ Adicionar Emprego/Estudo Anterior</button>
+
+    </div>
+  </div>
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(8)">← Anterior</button>
+    <button class="btn btn-primary" onclick="goSection(10)">Próximo: Segurança e Saúde →</button>
+  </div>
+</div>
+
+<!-- ─── SEÇÃO 11: SEGURANÇA E SAÚDE ─── -->
+<div class="section" id="section-10">
+  <div class="section-card">
+    <div class="section-header">
+      <span class="sec-icon">🛡️</span>
+      <div>
+        <h2>Informações Médicas, Criminais e de Segurança</h2>
+        <p>Responda com atenção — respostas SIM podem exigir entrevista consular</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="alert alert-red">
+        Forneça informações completas e precisas. Responder SIM não significa automaticamente inelegibilidade ao visto, mas pode exigir comparecimento pessoal perante um oficial consular.
+      </div>
+
+      <div id="yn-questions-container"></div>
+
+    </div>
+  </div>
+
+  <!-- Painel de validação -->
+  <div id="validation-panel">
+    <h3>⚠️ Campos obrigatórios não preenchidos</h3>
+    <ul id="validation-list"></ul>
+  </div>
+
+  <!-- Status por seção -->
+  <div class="completion-bar" id="completion-bar">
+    <h3>Status de preenchimento por seção:</h3>
+    <div class="section-status-grid" id="section-status-grid"></div>
+  </div>
+
+  <!-- Assinatura -->
+  <div class="section-card" style="margin-top:20px">
+    <div class="section-header">
+      <span class="sec-icon">✍️</span>
+      <div><h2>Declaração e Assinatura</h2></div>
+    </div>
+    <div class="section-body">
+      <div class="alert">
+        Ao assinar, o requerente confirma que todas as respostas são verdadeiras e completas. Nenhum campo pode ficar em branco. Formulários incompletos não poderão ser processados.
+      </div>
+      <div class="final-box">
+        <div id="final-status-msg">
+          <h2 id="final-title">Verifique o formulário</h2>
+          <p id="final-subtitle">Clique em "Validar Formulário" para verificar os campos obrigatórios antes de gerar o PDF.</p>
+        </div>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin: 20px 0 10px">
+          <button class="btn btn-secondary" onclick="runValidation()" style="font-size:0.95rem; padding:12px 24px;">
+            🔍 Validar Formulário
+          </button>
+          <button class="btn btn-success" onclick="exportJSON()" style="font-size:0.95rem; padding:12px 24px;">
+            💾 Exportar Dados (JSON)
+          </button>
+        </div>
+        <div class="sign-area" id="sign-area" style="display:none">
+          <p>De acordo com o preenchimento e as condições apresentadas:</p>
+          <div class="sign-line"></div>
+          <p class="sign-label">Assinatura do Requerente</p>
+        </div>
+        <div style="display:flex; justify-content:center; margin-top:20px">
+          <button class="btn btn-pdf" id="btn-gerar-pdf" onclick="gerarPDF()" disabled>
+            📄 Gerar PDF
+          </button>
+        </div>
+        <p style="font-size:0.75rem; color:var(--texto-leve); margin-top:10px; text-align:center">
+          O botão PDF será liberado após todos os campos obrigatórios estarem preenchidos
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-secondary" onclick="goSection(9)">← Anterior</button>
+    <button class="btn btn-pdf" onclick="gerarPDF()" id="btn-pdf-nav" disabled style="font-size:0.88rem; padding:12px 22px;">
+      📄 Gerar PDF
+    </button>
+  </div>
+</div>
+
+<!-- OVERLAY PDF -->
+<div id="pdf-overlay">
+  <div class="pdf-spinner"></div>
+  <p>Gerando PDF... Aguarde</p>
+</div>
+
+</div><!-- /main -->
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+═════════════════════════════════════════════ -->
+<script>
+// ── SECTION NAMES ──
+const sectionNames = [
+  'Informações Pessoais',
+  'Mídia Social',
+  'Endereço e Contatos',
+  'Dados do Passaporte',
+  'Viagem aos EUA',
+  'Companheiros de Viagem',
+  'Viagens Anteriores',
+  'Contatos nos EUA',
+  'Familiares',
+  'Ocupação',
+  'Segurança e Saúde',
+];
+
+let currentSection = 0;
+
+// ── NAVIGATE ──
+function goSection(idx) {
+  document.querySelectorAll('.section').forEach((s, i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+  currentSection = idx;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress() {
+  const pct = Math.round(((currentSection + 1) / 11) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-label').textContent =
+    `Seção ${currentSection + 1} de 11 — ${sectionNames[currentSection]}`;
+}
+
+// ── TOGGLE CONDITIONAL BLOCKS ──
+function toggleBlock(id, show) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show', show);
+}
+
+// ── VISA TYPE OUTROS ──
+document.querySelectorAll('input[name="tipoVisto"]').forEach(r => {
+  r.addEventListener('change', function() {
+    const b = document.getElementById('block-visto-outros');
+    if (b) b.style.display = this.value === 'outros' ? 'block' : 'none';
+  });
+});
+
+// ── SWITCH APLICANTE PRINCIPAL / ACOMPANHANTE ──
+function toggleViagem(isPrincipal) {
+  document.getElementById('block-aplicante-principal').style.display = isPrincipal ? '' : 'none';
+  document.getElementById('block-acompanhante').style.display = isPrincipal ? 'none' : '';
+}
+
+// ── PAGADOR VIAGEM ──
+function showPagador(tipo) {
+  document.getElementById('block-pagador-pessoa').classList.toggle('show', tipo === 'pessoa');
+  document.getElementById('block-pagador-empresa').classList.toggle('show', tipo === 'empresa');
+}
+
+// ── CONJUGE ENDEREÇO ──
+document.getElementById('conjugeEndOpcao').addEventListener('change', function() {
+  const b = document.getElementById('block-conjuge-end');
+  b.style.display = this.value === 'outro' ? 'block' : 'none';
+});
+
+// ── COMPANHEIROS ──
+let compCount = 0;
+function addCompanheiro() {
+  compCount++;
+  const list = document.getElementById('companheiros-list');
+  const row = document.createElement('div');
+  row.className = 'repeat-row';
+  row.id = 'comp-row-' + compCount;
+  row.innerHTML = `
+    <button class="remove-btn" onclick="removeRow('comp-row-${compCount}')">Remover</button>
+    <div class="field-row cols-3">
+      <div class="field"><label>Sobrenome(s)</label><input type="text" placeholder="Sobrenome" /></div>
+      <div class="field"><label>Nome(s)</label><input type="text" placeholder="Nome" /></div>
+      <div class="field"><label>Parentesco</label><input type="text" placeholder="Ex: filho, esposa" /></div>
+    </div>`;
+  list.appendChild(row);
+}
+
+// ── VISITAS EUA ──
+let visitCount = 0;
+function addVisita() {
+  visitCount++;
+  const list = document.getElementById('visitas-list');
+  const row = document.createElement('div');
+  row.className = 'repeat-row';
+  row.id = 'vis-row-' + visitCount;
+  row.innerHTML = `
+    <button class="remove-btn" onclick="removeRow('vis-row-${visitCount}')">Remover</button>
+    <div class="field-row cols-2">
+      <div class="field"><label>Data de Entrada nos EUA</label><input type="date" /></div>
+      <div class="field"><label>Tempo de Permanência</label><input type="text" placeholder="Ex: 15 dias, 2 meses" /></div>
+    </div>`;
+  list.appendChild(row);
+}
+// Add one by default
+setTimeout(() => {
+  if (document.getElementById('block-visitas-eua')) {
+    // Only auto-add if visible
+  }
+}, 100);
+
+// ── EMPREGOS ANTERIORES ──
+let empCount = 0;
+function addEmpregoAnterior() {
+  empCount++;
+  const list = document.getElementById('empregos-anteriores-list');
+  const row = document.createElement('div');
+  row.className = 'repeat-row';
+  row.id = 'emp-row-' + empCount;
+  row.innerHTML = `
+    <button class="remove-btn" onclick="removeRow('emp-row-${empCount}')">Remover</button>
+    <div class="field-row cols-2">
+      <div class="field"><label>Nome completo da empresa</label><input type="text" /></div>
+      <div class="field"><label>Telefone com DDD</label><input type="tel" /></div>
+    </div>
+    <div class="field-row cols-1">
+      <div class="field"><label>Endereço completo (Rua / Av. / Nº / Bairro / Cidade / Estado / CEP / País)</label><input type="text" /></div>
+    </div>
+    <div class="field-row cols-2">
+      <div class="field"><label>Último Cargo</label><input type="text" /></div>
+      <div class="field"><label>Nome do Supervisor/Gerente</label><input type="text" /></div>
+    </div>
+    <div class="field-row cols-2">
+      <div class="field"><label>Data de Admissão</label><input type="date" /></div>
+      <div class="field"><label>Data de Demissão</label><input type="date" /></div>
+    </div>
+    <div class="field-row cols-1">
+      <div class="field"><label>Descreva brevemente suas funções</label><textarea></textarea></div>
+    </div>`;
+  list.appendChild(row);
+}
+
+// ── REMOVE ROW ──
+function removeRow(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// ── SOCIAL MEDIA ──
+const socialPlatforms = [
+  'ASK.FM','DOUBAN','FACEBOOK','FLICKR','GOOGLE+','INSTAGRAM','LINKEDIN',
+  'MYSPACE','PINTEREST','QZONE (QQ)','REDDIT','SINA WEIBO','TENCENT WEIBO',
+  'TUMBLR','TWITTER/X','TWOO','VINE','VKONTAKTE (VK)','YOUKU','YOUTUBE',
+  'TIKTOK','WHATSAPP','TELEGRAM','DISCORD'
+];
+
+const grid = document.getElementById('social-grid');
+socialPlatforms.forEach(p => {
+  const id = 'social-' + p.replace(/[^a-z0-9]/gi,'').toLowerCase();
+  const div = document.createElement('div');
+  div.className = 'social-item';
+  div.id = 'si-' + id;
+  div.innerHTML = `
+    <input type="checkbox" id="${id}" onchange="toggleSocial('${id}','si-${id}')" />
+    <label for="${id}">${p}</label>
+    <div class="social-user">
+      <input type="text" placeholder="Usuário / @handle" style="margin-top:4px; font-size:0.8rem" />
+    </div>`;
+  grid.appendChild(div);
+});
+
+function toggleSocial(cbId, divId) {
+  const cb = document.getElementById(cbId);
+  const div = document.getElementById(divId);
+  div.classList.toggle('checked', cb.checked);
+}
+
+// ── YES/NO SECURITY QUESTIONS ──
+const ynQuestions = [
+  'Você tem uma doença transmissível de importância para a saúde pública, como a tuberculose (TB)?',
+  'Você tem um distúrbio mental ou físico que represente ou possa representar uma ameaça para a segurança ou bem-estar de si mesmo ou outros?',
+  'Você é ou já foi um viciado em drogas?',
+  'Alguma vez você já foi preso ou condenado por qualquer ofensa ou crime, ainda que objeto de um indulto, anistia ou ação similar?',
+  'Alguma vez você violou ou foi envolvido em uma conspiração para violar qualquer lei relativa às substâncias controladas?',
+  'Você vem para os Estados Unidos para exercer a prostituição ou comercialização ilegal, ou ainda foi envolvido em prostituição ou a busca de prostitutas nos últimos 10 anos?',
+  'Alguma vez você já esteve envolvido ou procurou se envolver em lavagem de dinheiro?',
+  'Você procurará envolvimento em espionagem, sabotagem, violações de controle de exportação, ou qualquer outra atividade ilegal enquanto nos EUA?',
+  'Você procurará envolvimento em atividades terroristas enquanto nos EUA, ou já está envolvido em atividades terroristas?',
+  'Alguma vez você já prestou ou teve a intenção de prestar assistência financeira ou outro apoio a terroristas ou organizações terroristas?',
+  'Você é membro ou representante de uma organização terrorista?',
+  'Alguma vez você já ordenou, incitou, esteve comprometido, assistido ou participado no genocídio?',
+  'Alguma vez você já cometeu, ordenou, incitou, assistido ou participado de atos de tortura?',
+  'Você já cometeu, ordenado, incitado ou participado de execuções extrajudiciais, assassinatos políticos ou outros atos de violência?',
+  'Alguma vez foi responsável diretamente ou indiretamente de graves violações da liberdade religiosa?',
+  'Alguma vez você já foi objeto de uma audiência de deportação ou remoção?',
+  'Alguma vez procurou obter ou ajudar outros a obter um visto dos EUA ou qualquer outro benefício de imigração por fraude ou deturpação deliberada?',
+  'Você ultrapassou ilegalmente o período de tempo concedido por um funcionário da imigração, violando os termos de um visto EUA?',
+  'Alguma vez manteve a custódia de uma criança cidadã EUA fora dos EUA a partir de uma pessoa que tiver a guarda legal de um tribunal EUA?',
+  'Você já votou nos EUA em violação de qualquer lei ou regulamento?',
+  'Alguma vez você já renunciou à cidadania norte-americana com a finalidade de evitar o imposto?',
+  'Você já assistiu a uma escola pública de estudante (F) ou de uma escola secundária pública depois de 30 de novembro de 1996, sem reembolso da escola?',
+];
+
+const ynContainer = document.getElementById('yn-questions-container');
+ynQuestions.forEach((q, i) => {
+  const id = 'yn-' + i;
+  const div = document.createElement('div');
+  div.className = 'yn-question';
+  div.innerHTML = `
+    <p>${q}</p>
+    <div class="yn-btns">
+      <button class="yn-btn nao selected" id="${id}-nao" onclick="selectYN('${id}','nao')">✅ NÃO</button>
+      <button class="yn-btn sim" id="${id}-sim" onclick="selectYN('${id}','sim')">⚠️ SIM</button>
+    </div>
+    <div class="conditional-block" id="${id}-explain" style="margin-top:10px">
+      <label style="font-size:0.8rem; color:var(--vermelho); text-transform:none; font-weight:600">Por favor, explique:</label>
+      <textarea placeholder="Forneça informações completas e precisas..." style="margin-top:6px"></textarea>
+    </div>`;
+  ynContainer.appendChild(div);
+});
+
+function selectYN(id, val) {
+  const simBtn = document.getElementById(id + '-sim');
+  const naoBtn = document.getElementById(id + '-nao');
+  const explain = document.getElementById(id + '-explain');
+  simBtn.classList.toggle('selected', val === 'sim');
+  naoBtn.classList.toggle('selected', val === 'nao');
+  if (explain) explain.classList.toggle('show', val === 'sim');
+}
+
+// ── EXPORT JSON ──
+function exportJSON() {
+  const data = {};
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    if (el.name && el.type === 'radio') {
+      if (el.checked) data[el.name] = el.value;
+    } else if (el.name && el.type === 'checkbox') {
+      if (el.checked) data[el.name] = true;
+    } else if (el.id) {
+      data[el.id] = el.value;
+    }
+  });
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'ds160_dados.json';
+  a.click();
+}
+
+// ── CPF MASK ──
+document.getElementById('cpf').addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'').slice(0,11);
+  if (v.length > 9) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9);
+  else if (v.length > 6) v = v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6);
+  else if (v.length > 3) v = v.slice(0,3)+'.'+v.slice(3);
+  this.value = v;
+});
+
+// ── CEP MASK ──
+['endCep','passEndCep'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').slice(0,8);
+    if (v.length > 5) v = v.slice(0,5)+'-'+v.slice(5);
+    this.value = v;
+  });
+});
+
+// ── MOBILE BOTTOM NAV ──
+function updateMobileNav() {
+  const prevBtn = document.getElementById('mob-prev');
+  const nextBtn = document.getElementById('mob-next');
+  const counter = document.getElementById('mob-counter');
+  if (!prevBtn) return;
+  prevBtn.disabled = currentSection === 0;
+  nextBtn.textContent = currentSection === 10 ? '✅ Concluir' : 'Próximo →';
+  counter.innerHTML = `<span>Seção</span><strong>${currentSection + 1} / 11</strong>`;
+}
+
+// Patch goSection to also update mobile nav
+const _origGoSection = goSection;
+window.goSection = function(idx) {
+  _origGoSection(idx);
+  updateMobileNav();
+};
+
+// ════════════════════════════════════════
+//  VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS
+// ════════════════════════════════════════
+
+// Campos obrigatórios por seção [sectionIdx]: [ {id, label} ]
+const requiredFields = {
+  0: [
+    { id: 'sobrenome',    label: 'Sobrenome' },
+    { id: 'nome',         label: 'Nome' },
+    { id: 'nomeCompleto', label: 'Nome completo' },
+    { id: 'dataNasc',     label: 'Data de Nascimento' },
+    { id: 'cidadeNasc',   label: 'Cidade de Nascimento' },
+    { id: 'paisNasc',     label: 'País de Nascimento' },
+    { id: 'nacionalidade',label: 'Nacionalidade' },
+    { id: 'cpf',          label: 'CPF' },
+  ],
+  2: [
+    { id: 'endRua',    label: 'Rua / Endereço Residencial' },
+    { id: 'endBairro', label: 'Bairro' },
+    { id: 'endCidade', label: 'Cidade' },
+    { id: 'endEstado', label: 'Estado' },
+    { id: 'endCep',    label: 'CEP' },
+    { id: 'endPais',   label: 'País' },
+    { id: 'tel1',      label: 'Telefone Residencial' },
+    { id: 'email',     label: 'E-mail' },
+  ],
+  3: [
+    { id: 'tipoPassaporte',    label: 'Tipo do Passaporte' },
+    { id: 'numPassaporte',     label: 'Número do Passaporte' },
+    { id: 'passEmissorPais',   label: 'País Emissor do Passaporte' },
+    { id: 'passEmissorCidade', label: 'Cidade de Emissão' },
+    { id: 'passDataEmissao',   label: 'Data de Emissão' },
+    { id: 'passDataVenc',      label: 'Data de Vencimento' },
+  ],
+  4: [
+    { id: 'dataChegadaEUA',   label: 'Data de Chegada nos EUA' },
+    { id: 'tempoPermanencia', label: 'Tempo de Permanência' },
+    { id: 'endEUA',           label: 'Endereço nos EUA' },
+  ],
+  7: [
+    { id: 'contatoEUASobrenome', label: 'Sobrenome do Contato nos EUA' },
+    { id: 'contatoEUANome',      label: 'Nome do Contato nos EUA' },
+    { id: 'contatoEUARelacao',   label: 'Relação com o Contato nos EUA' },
+    { id: 'contatoEUAEndereco',  label: 'Endereço do Contato nos EUA' },
+  ],
+  8: [
+    { id: 'paiNome', label: 'Nome do Pai' },
+    { id: 'maeNome', label: 'Nome da Mãe' },
+  ],
+  9: [
+    { id: 'ocupacaoAtual', label: 'Ocupação Atual' },
+    { id: 'funcoesAtual',  label: 'Descrição das Funções' },
+  ],
+};
+
+// Radio groups obrigatórios por seção
+const requiredRadios = {
+  0: [
+    { name: 'sexo',        label: 'Sexo' },
+  ],
+  4: [
+    { name: 'tipoVisto',   label: 'Tipo de Visto (se aplicante principal)' },
+  ],
+};
+
+function getFieldLabel(id) {
+  for (const secFields of Object.values(requiredFields)) {
+    const f = secFields.find(f => f.id === id);
+    if (f) return f.label;
+  }
+  return id;
+}
+
+function validateSection(secIdx) {
+  const errors = [];
+
+  // Text/date/select/textarea fields
+  const fields = requiredFields[secIdx] || [];
+  fields.forEach(({ id, label }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const val = el.value.trim();
+    if (!val) {
+      errors.push({ id, label, secIdx });
+      el.classList.add('invalid');
+      el.classList.remove('valid');
+      // Show error message
+      let msg = el.parentElement.querySelector('.field-error-msg');
+      if (!msg) {
+        msg = document.createElement('span');
+        msg.className = 'field-error-msg';
+        el.after(msg);
+      }
+      msg.textContent = '⚠ Campo obrigatório';
+      msg.classList.add('show');
+    } else {
+      el.classList.remove('invalid');
+      el.classList.add('valid');
+      const msg = el.parentElement.querySelector('.field-error-msg');
+      if (msg) msg.classList.remove('show');
+    }
+  });
+
+  // Radio groups
+  const radios = requiredRadios[secIdx] || [];
+  radios.forEach(({ name, label }) => {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    if (!checked) {
+      errors.push({ id: name, label, secIdx, isRadio: true });
+    }
+  });
+
+  return errors;
+}
+
+function runValidation() {
+  const allErrors = [];
+  for (let i = 0; i <= 10; i++) {
+    const errs = validateSection(i);
+    allErrors.push(...errs);
+  }
+  updateValidationUI(allErrors);
+  updateSectionStatusGrid(allErrors);
+  return allErrors;
+}
+
+function updateValidationUI(allErrors) {
+  const panel  = document.getElementById('validation-panel');
+  const list   = document.getElementById('validation-list');
+  const btnPdf = document.getElementById('btn-gerar-pdf');
+  const btnNav = document.getElementById('btn-pdf-nav');
+  const signArea = document.getElementById('sign-area');
+  const finalTitle = document.getElementById('final-title');
+  const finalSubtitle = document.getElementById('final-subtitle');
+
+  // Update tab badges
+  for (let i = 0; i <= 10; i++) {
+    const tab  = document.querySelector(`.tab-btn[data-section="${i}"]`);
+    let badge  = tab ? tab.querySelector('.tab-badge') : null;
+    if (tab && !badge) {
+      badge = document.createElement('span');
+      badge.className = 'tab-badge';
+      tab.appendChild(badge);
+    }
+    const secErrors = allErrors.filter(e => e.secIdx === i);
+    if (tab) tab.classList.toggle('has-error', secErrors.length > 0);
+    if (badge) {
+      badge.textContent = secErrors.length;
+      badge.classList.toggle('show', secErrors.length > 0);
+    }
+  }
+
+  if (allErrors.length === 0) {
+    panel.classList.remove('show');
+    btnPdf.disabled = false;
+    if (btnNav) btnNav.disabled = false;
+    signArea.style.display = '';
+    finalTitle.textContent = '✅ Formulário completo!';
+    finalTitle.style.color = 'var(--verde)';
+    finalSubtitle.textContent = 'Todos os campos obrigatórios estão preenchidos. Assine e gere o PDF.';
+  } else {
+    panel.classList.add('show');
+    btnPdf.disabled = true;
+    if (btnNav) btnNav.disabled = true;
+    signArea.style.display = 'none';
+    finalTitle.textContent = `⚠️ ${allErrors.length} campo(s) obrigatório(s) pendente(s)`;
+    finalTitle.style.color = 'var(--vermelho)';
+    finalSubtitle.textContent = 'Corrija os campos indicados abaixo para habilitar o PDF.';
+
+    list.innerHTML = '';
+    allErrors.forEach(err => {
+      const li = document.createElement('li');
+      li.textContent = `Seção ${err.secIdx + 1} — ${sectionNames[err.secIdx]}: ${err.label}`;
+      li.addEventListener('click', () => {
+        goSection(err.secIdx);
+        if (!err.isRadio) {
+          const el = document.getElementById(err.id);
+          if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        }
+      });
+      list.appendChild(li);
+    });
+  }
+}
+
+function updateSectionStatusGrid(allErrors) {
+  const grid = document.getElementById('section-status-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  sectionNames.forEach((name, i) => {
+    const errCount = allErrors.filter(e => e.secIdx === i).length;
+    const fields   = requiredFields[i] || [];
+    const radios   = requiredRadios[i] || [];
+    const hasRequired = fields.length + radios.length > 0;
+
+    const div = document.createElement('div');
+    div.className = 'sec-status ' + (
+      !hasRequired ? 'ok' :
+      errCount > 0 ? 'erro' : 'ok'
+    );
+    div.innerHTML = `<span class="dot"></span><span>${i + 1}. ${name}${errCount > 0 ? ` (${errCount})` : ''}</span>`;
+    div.addEventListener('click', () => goSection(i));
+    grid.appendChild(div);
+  });
+}
+
+// Validação em tempo real ao sair de um campo
+document.addEventListener('blur', function(e) {
+  const el = e.target;
+  if (!el.required) return;
+  if (['INPUT','SELECT','TEXTAREA'].includes(el.tagName)) {
+    const isEmpty = !el.value.trim();
+    el.classList.toggle('invalid', isEmpty);
+    el.classList.toggle('valid', !isEmpty);
+    let msg = el.parentElement.querySelector('.field-error-msg');
+    if (!msg) {
+      msg = document.createElement('span');
+      msg.className = 'field-error-msg';
+      el.after(msg);
+    }
+    msg.textContent = '⚠ Campo obrigatório';
+    msg.classList.toggle('show', isEmpty);
+  }
+}, true);
+
+// ════════════════════════════════════════
+//  GERAÇÃO DE PDF
+// ════════════════════════════════════════
+function gerarPDF() {
+  const errors = runValidation();
+  if (errors.length > 0) {
+    goSection(10);
+    document.getElementById('validation-panel').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+
+  const overlay = document.getElementById('pdf-overlay');
+  overlay.classList.add('show');
+
+  // Usar window.print() para PDF — abre diálogo nativo do navegador
+  // que permite "Salvar como PDF" em todos os browsers modernos
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    window.print();
+  }, 800);
+}
+
+// ── INIT ──
+updateProgress();
+// Inicializa grid de status vazio
+updateSectionStatusGrid([]);
+
+// Init mobile nav after DOM is complete
+document.addEventListener('DOMContentLoaded', function() {
+  updateMobileNav();
+  const prevBtn = document.getElementById('mob-prev');
+  const nextBtn = document.getElementById('mob-next');
+  if (prevBtn) prevBtn.addEventListener('click', () => {
+    if (currentSection > 0) window.goSection(currentSection - 1);
+  });
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    if (currentSection < 10) window.goSection(currentSection + 1);
+    else window.print();
+  });
+});
+</script>
+
+<!-- ══ BOTÃO FLUTUANTE WHATSAPP ══ -->
+<div class="whatsapp-float">
+  <div class="whatsapp-bubble" id="wa-bubble">
+    Dúvidas? <span>Fale conosco!</span> 👋
+  </div>
+  <a class="whatsapp-btn"
+     href="https://wa.me/553432166888?text=Olá!%20Tenho%20dúvidas%20sobre%20o%20processo%20de%20visto%20americano."
+     target="_blank"
+     rel="noopener noreferrer"
+     title="Falar no WhatsApp — Sem Fronteiras Turismo"
+     id="wa-btn"
+     onmouseenter="showBubble(true)"
+     onmouseleave="showBubble(false)">
+    <!-- Ícone oficial WhatsApp -->
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="16" fill="#25D366"/>
+      <path d="M22.7 9.3A9.3 9.3 0 0 0 7.1 20.6L6 26l5.6-1.5a9.3 9.3 0 0 0 11.1-14.2zm-6.7 14.3a7.7 7.7 0 0 1-3.9-1.1l-.3-.2-3.3.9.9-3.2-.2-.3a7.7 7.7 0 1 1 6.8 3.9zm4.2-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.4 6.4 0 0 1-1.9-1.2 7.1 7.1 0 0 1-1.3-1.6c-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.5.1-.7.3a3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.5 4c.6.3 1.1.4 1.5.3.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1z" fill="#fff"/>
+    </svg>
+    <span class="whatsapp-badge">1</span>
+  </a>
+</div>
+
+<script>
+// Balão aparece automaticamente após 3s e some após 6s
+setTimeout(() => {
+  showBubble(true);
+  setTimeout(() => showBubble(false), 4000);
+}, 3000);
+
+// Reaparece a cada 5s junto com a vibração
+setInterval(() => {
+  showBubble(true);
+  setTimeout(() => showBubble(false), 3500);
+}, 10000);
+
+function showBubble(show) {
+  const b = document.getElementById('wa-bubble');
+  if (b) b.classList.toggle('show', show);
+}
+</script>
+
+<!-- MOBILE BOTTOM NAV BAR -->
+<div class="mobile-nav">
+  <button class="btn btn-secondary" id="mob-prev" disabled>← Anterior</button>
+  <div class="mobile-nav-center" id="mob-counter">
+    <span>Seção</span>
+    <strong>1 / 11</strong>
+  </div>
+  <button class="btn btn-primary" id="mob-next">Próximo →</button>
+</div>
+
+</body>
+</html>
