@@ -2681,4 +2681,68 @@ function updateValidationUI(allErrors) {
     panel.classList.remove('show');
     btnPdf.disabled = false;
     if (btnNav) btnNav.disabled = false;
-   
+       signArea.style.display = 'block';
+    finalTitle.textContent = '✅ Formulário completo!';
+    finalTitle.style.color = 'var(--verde)';
+    finalSubtitle.textContent = 'Todos os campos obrigatórios foram preenchidos. Clique em "Gerar PDF" para salvar.';
+  } else {
+    panel.classList.add('show');
+    btnPdf.disabled = true;
+    if (btnNav) btnNav.disabled = true;
+    signArea.style.display = 'none';
+    finalTitle.textContent = `⚠️ ${allErrors.length} campo(s) incompleto(s)`;
+    finalTitle.style.color = 'var(--vermelho)';
+    finalSubtitle.textContent = 'Corrija os campos destacados em vermelho e clique em "Validar Formulário" novamente.';
+    list.innerHTML = '';
+    allErrors.forEach(({ id, label, secIdx, isRadio }) => {
+      const li = document.createElement('li');
+      li.textContent = `Seção ${secIdx + 1} — ${label}`;
+      li.style.cursor = 'pointer';
+      li.addEventListener('click', () => {
+        goSection(secIdx);
+        if (!isRadio) {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) { el.focus(); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+          }, 300);
+        }
+      });
+      list.appendChild(li);
+    });
+  }
+}
+
+function updateSectionStatusGrid(allErrors) {
+  const grid = document.getElementById('section-status-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  for (let i = 0; i <= 10; i++) {
+    const secErrors = allErrors.filter(e => e.secIdx === i);
+    const hasRequired = (requiredFields[i]?.length > 0) || (requiredRadios[i]?.length > 0);
+    const div = document.createElement('div');
+    div.className = 'sec-status ' + (!hasRequired ? 'vazio' : secErrors.length === 0 ? 'ok' : 'erro');
+    div.innerHTML = `<span class="dot"></span>${sectionNames[i]}`;
+    div.addEventListener('click', () => goSection(i));
+    grid.appendChild(div);
+  }
+}
+
+function gerarPDF() {
+  const overlay = document.getElementById('pdf-overlay');
+  overlay.classList.add('show');
+  setTimeout(() => {
+    window.print();
+    overlay.classList.remove('show');
+  }, 500);
+}
+</script>
+<style>
+/* Garante que a foto apareça no PDF e o input não cubra */
+@media print {
+  .photo-upload-box input[type="file"],
+  .photo-placeholder { display: none !important; }
+  .photo-preview { display: block !important; }
+}
+</style>
+</body>
+</html>
