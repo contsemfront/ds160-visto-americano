@@ -1637,15 +1637,7 @@
           <div class="field">
             <label>Selecione o motivo da viagem / visto requerido <span class="req">*</span></label>
             <div class="radio-group" style="flex-direction:column; align-items:flex-start;">
-              <label class="radio-option"><input type="radio" name="tipoVisto" value="B1" /> Negócios, Conferência (B1)</label>
-              <label class="radio-option"><input type="radio" name="tipoVisto" value="B2" /> Turismo, Visita Familiar (B2)</label>
-              <label class="radio-option"><input type="radio" name="tipoVisto" value="B1B2" /> Negócios e Turismo (B1/B2)</label>
-              <label class="radio-option"><input type="radio" name="tipoVisto" value="BCC" /> Visto de Fronteira (BCC)</label>
-              <label class="radio-option"><input type="radio" name="tipoVisto" value="estudante" /> Estudante (F, J, M, Q)</label>
-              <label class="radio-option"><input type="radio" name="tipoVisto" value="outros" /> Outros — especificar</label>
-            </div>
-            <div class="conditional-block show" id="block-visto-outros" style="display:none; margin-top:8px">
-              <input type="text" id="tipoVistoOutros" placeholder="Especifique a categoria/classificação do visto" />
+              <label class="radio-option"><input type="radio" name="tipoVisto" value="B1B2" checked /> Negócios e Turismo (B1/B2)</label>
             </div>
           </div>
         </div>
@@ -1948,15 +1940,15 @@
     </div>
     <div class="section-body">
       <div class="field-row cols-2">
-        <div class="field"><label>Sobrenome(s) do Contato <span class="req">*</span></label><input type="text" id="contatoEUASobrenome" /></div>
-        <div class="field"><label>Nome(s) do Contato <span class="req">*</span></label><input type="text" id="contatoEUANome" /></div>
+        <div class="field"><label>Sobrenome(s) do Contato</label><input type="text" id="contatoEUASobrenome" /></div>
+        <div class="field"><label>Nome(s) do Contato</label><input type="text" id="contatoEUANome" /></div>
       </div>
       <div class="field-row cols-2">
         <div class="field"><label>Nome da Empresa / Organização</label><input type="text" id="contatoEUAEmpresa" placeholder="Se pessoa física, deixar em branco" /></div>
-        <div class="field"><label>Relação / Parentesco com você <span class="req">*</span></label><input type="text" id="contatoEUARelacao" placeholder="Ex: amigo, tio, parceiro comercial" /></div>
+        <div class="field"><label>Relação / Parentesco com você</label><input type="text" id="contatoEUARelacao" placeholder="Ex: amigo, tio, parceiro comercial" /></div>
       </div>
       <div class="field-row cols-1">
-        <div class="field"><label>Endereço completo nos EUA (Rua / Av. / Nº / Bairro / Cidade / Estado / CEP) <span class="req">*</span></label><textarea id="contatoEUAEndereco" placeholder="Endereço completo nos EUA"></textarea></div>
+        <div class="field"><label>Endereço completo nos EUA (Rua / Av. / Nº / Bairro / Cidade / Estado / CEP)</label><textarea id="contatoEUAEndereco" placeholder="Endereço completo nos EUA"></textarea></div>
       </div>
       <div class="field-row cols-2">
         <div class="field"><label>Telefone com DDD (EUA)</label><input type="tel" id="contatoEUATel" placeholder="+1 (000) 000-0000" /></div>
@@ -2340,13 +2332,6 @@ function toggleBlock(id, show) {
 }
 
 // ── VISA TYPE OUTROS ──
-document.querySelectorAll('input[name="tipoVisto"]').forEach(r => {
-  r.addEventListener('change', function() {
-    const b = document.getElementById('block-visto-outros');
-    if (b) b.style.display = this.value === 'outros' ? 'block' : 'none';
-  });
-});
-
 // ── SWITCH APLICANTE PRINCIPAL / ACOMPANHANTE ──
 function toggleViagem(isPrincipal) {
   document.getElementById('block-aplicante-principal').style.display = isPrincipal ? '' : 'none';
@@ -2620,12 +2605,6 @@ const requiredFields = {
     { id: 'dataChegadaEUA',   label: 'Data de Chegada nos EUA' },
     { id: 'tempoPermanencia', label: 'Tempo de Permanência' },
     { id: 'endEUA',           label: 'Endereço nos EUA' },
-  ],
-  7: [
-    { id: 'contatoEUASobrenome', label: 'Sobrenome do Contato nos EUA' },
-    { id: 'contatoEUANome',      label: 'Nome do Contato nos EUA' },
-    { id: 'contatoEUARelacao',   label: 'Relação com o Contato nos EUA' },
-    { id: 'contatoEUAEndereco',  label: 'Endereço do Contato nos EUA' },
   ],
   8: [
     { id: 'paiNome', label: 'Nome do Pai' },
