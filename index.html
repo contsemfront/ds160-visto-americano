@@ -1237,6 +1237,38 @@
         </div>
       </div>
 
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Escolaridade</label>
+          <select id="escolaridade" onchange="toggleBlock('block-escolaridade-datas', this.value !== '')">
+            <option value="">Selecione...</option>
+            <option value="analfabeto">Analfabeto</option>
+            <option value="ate5incompleto">Até 5º Ano Incompleto</option>
+            <option value="5completo">5º Ano Completo</option>
+            <option value="6a9fundamental">6º ao 9º Ano do Fundamental</option>
+            <option value="fundamentalcompleto">Fundamental Completo</option>
+            <option value="medioincompleto">Médio Incompleto</option>
+            <option value="mediocompleto">Médio Completo</option>
+            <option value="superiorincompleto">Superior Incompleto</option>
+            <option value="superiorcompleto">Superior Completo</option>
+            <option value="mestrado">Mestrado</option>
+            <option value="doutorado">Doutorado</option>
+          </select>
+          <div class="conditional-block" id="block-escolaridade-datas">
+            <div class="field-row cols-2">
+              <div class="field">
+                <label>Data de Início</label>
+                <input type="date" id="escolaridadeDataInicio" />
+              </div>
+              <div class="field">
+                <label>Data de Término</label>
+                <input type="date" id="escolaridadeDataTermino" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="subsec-title">Data e Local de Nascimento</div>
       <div class="field-row cols-2">
         <div class="field">
@@ -1565,6 +1597,42 @@
         <div class="field">
           <label>Data de Vencimento (dd/mm/aaaa) <span class="req">*</span></label>
           <input type="date" id="passDataVenc" required />
+        </div>
+      </div>
+
+      <div class="subsec-title">Fotos do Documento</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Foto do Passaporte (página com o número) <span class="req">*</span></label>
+          <div class="photo-field-wrap">
+            <div class="photo-upload-box">
+              <input type="file" id="fotoPassaporteNumero" accept="image/jpeg,image/png,image/jpg,image/webp" onchange="handlePhotoUpload(this)" required />
+              <img class="photo-preview" src="" alt="Preview da foto do passaporte" />
+              <div class="photo-placeholder">
+                <span class="photo-upload-icon">📗</span>
+                <div class="photo-upload-label">Clique para<br>enviar foto</div>
+              </div>
+            </div>
+            <div class="photo-info">
+              <div class="photo-upload-name"></div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Foto do Visto Anterior (para casos de Renovação)</label>
+          <div class="photo-field-wrap">
+            <div class="photo-upload-box">
+              <input type="file" id="fotoVistoRenovacao" accept="image/jpeg,image/png,image/jpg,image/webp" onchange="handlePhotoUpload(this)" />
+              <img class="photo-preview" src="" alt="Preview do visto anterior" />
+              <div class="photo-placeholder">
+                <span class="photo-upload-icon">🛂</span>
+                <div class="photo-upload-label">Clique para<br>enviar foto</div>
+              </div>
+            </div>
+            <div class="photo-info">
+              <div class="photo-upload-name"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2143,9 +2211,6 @@
       </div>
 
       <div class="subsec-title">Ocupações Anteriores</div>
-      <div class="alert">
-        Obrigatório para: <strong>Homens</strong> entre 16 e 61 anos (ou aposentados há menos de 5 anos com registro) e <strong>Mulheres</strong> aposentadas/do lar há menos de 5 anos ou solicitantes de visto de estudos (J/F/M/Q). Informe os <strong>2 últimos empregos</strong> (não incluir o atual).
-      </div>
 
       <div id="empregos-anteriores-list"></div>
       <button class="add-row-btn" onclick="addEmpregoAnterior()">+ Adicionar Emprego/Estudo Anterior</button>
@@ -2252,10 +2317,10 @@
 <script>
 // ── FOTO DO SOLICITANTE ──
 function handlePhotoUpload(input) {
-  const box         = document.getElementById('fotoBox');
-  const preview     = document.getElementById('fotoPreview');
-  const placeholder = document.getElementById('fotoPlaceholder');
-  const nome        = document.getElementById('fotoNome');
+  const box         = input.closest('.photo-upload-box');
+  const preview     = box.querySelector('.photo-preview');
+  const placeholder = box.querySelector('.photo-placeholder');
+  const nome        = input.closest('.photo-field-wrap').querySelector('.photo-upload-name');
 
   if (!input.files || !input.files[0]) return;
   const file = input.files[0];
@@ -2272,7 +2337,7 @@ function handlePhotoUpload(input) {
     preview.src = e.target.result;
     preview.classList.add('show');
     placeholder.style.display = 'none';
-    nome.textContent = '✓ ' + file.name;
+    if (nome) nome.textContent = '✓ ' + file.name;
     box.classList.add('has-photo');
 
     // Remove estado de erro
@@ -2594,12 +2659,13 @@ const requiredFields = {
     { id: 'email',     label: 'E-mail' },
   ],
   3: [
-    { id: 'tipoPassaporte',    label: 'Tipo do Passaporte' },
-    { id: 'numPassaporte',     label: 'Número do Passaporte' },
-    { id: 'passEmissorPais',   label: 'País Emissor do Passaporte' },
-    { id: 'passEmissorCidade', label: 'Cidade de Emissão' },
-    { id: 'passDataEmissao',   label: 'Data de Emissão' },
-    { id: 'passDataVenc',      label: 'Data de Vencimento' },
+    { id: 'tipoPassaporte',       label: 'Tipo do Passaporte' },
+    { id: 'numPassaporte',        label: 'Número do Passaporte' },
+    { id: 'passEmissorPais',      label: 'País Emissor do Passaporte' },
+    { id: 'passEmissorCidade',    label: 'Cidade de Emissão' },
+    { id: 'passDataEmissao',      label: 'Data de Emissão' },
+    { id: 'passDataVenc',         label: 'Data de Vencimento' },
+    { id: 'fotoPassaporteNumero', label: 'Foto do Passaporte' },
   ],
   4: [
     { id: 'dataChegadaEUA',   label: 'Data de Chegada nos EUA' },
