@@ -1240,7 +1240,7 @@
       <div class="field-row cols-1">
         <div class="field">
           <label>Escolaridade</label>
-          <select id="escolaridade" onchange="toggleBlock('block-escolaridade-datas', this.value !== '')">
+          <select id="escolaridade" onchange="toggleBlock('block-escolaridade-datas', this.value !== '' && this.value !== 'analfabeto')">
             <option value="">Selecione...</option>
             <option value="analfabeto">Analfabeto</option>
             <option value="ate5incompleto">Até 5º Ano Incompleto</option>
@@ -1277,13 +1277,43 @@
         </div>
         <div class="field">
           <label>Cidade de Nascimento <span class="req">*</span></label>
-          <input type="text" id="cidadeNasc" required />
+          <input type="text" id="cidadeNasc" list="cidadeNascList" required />
+          <datalist id="cidadeNascList"></datalist>
         </div>
       </div>
       <div class="field-row cols-3">
         <div class="field">
           <label>Estado de Nascimento</label>
-          <input type="text" id="estadoNasc" />
+          <input type="text" id="estadoNasc" list="ufNascList" />
+          <datalist id="ufNascList">
+            <option value="Acre"></option>
+            <option value="Alagoas"></option>
+            <option value="Amapá"></option>
+            <option value="Amazonas"></option>
+            <option value="Bahia"></option>
+            <option value="Ceará"></option>
+            <option value="Distrito Federal"></option>
+            <option value="Espírito Santo"></option>
+            <option value="Goiás"></option>
+            <option value="Maranhão"></option>
+            <option value="Mato Grosso"></option>
+            <option value="Mato Grosso do Sul"></option>
+            <option value="Minas Gerais"></option>
+            <option value="Pará"></option>
+            <option value="Paraíba"></option>
+            <option value="Paraná"></option>
+            <option value="Pernambuco"></option>
+            <option value="Piauí"></option>
+            <option value="Rio de Janeiro"></option>
+            <option value="Rio Grande do Norte"></option>
+            <option value="Rio Grande do Sul"></option>
+            <option value="Rondônia"></option>
+            <option value="Roraima"></option>
+            <option value="Santa Catarina"></option>
+            <option value="São Paulo"></option>
+            <option value="Sergipe"></option>
+            <option value="Tocantins"></option>
+          </datalist>
         </div>
         <div class="field">
           <label>País de Nascimento <span class="req">*</span></label>
@@ -2603,14 +2633,74 @@ document.getElementById('cpf').addEventListener('input', function() {
   this.value = v;
 });
 
-// ── CEP MASK ──
-['endCep','passEndCep'].forEach(id => {
+// ── CEP MASK + BUSCA AUTOMÁTICA DE ENDEREÇO (ViaCEP) ──
+const cepAddressMap = {
+  endCep:     { rua: 'endRua',     bairro: 'endBairro',     cidade: 'endCidade',     estado: 'endEstado' },
+  passEndCep: { rua: 'passEndRua', bairro: 'passEndBairro', cidade: 'passEndCidade', estado: 'passEndEstado' },
+};
+
+function buscarEnderecoPorCep(cepId) {
+  const cepEl = document.getElementById(cepId);
+  const fields = cepAddressMap[cepId];
+  const cep = cepEl.value.replace(/\D/g, '');
+  if (cep.length !== 8) return;
+
+  fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.erro) return; // CEP não encontrado — usuário preenche manualmente
+      const rua    = document.getElementById(fields.rua);
+      const bairro = document.getElementById(fields.bairro);
+      const cidade = document.getElementById(fields.cidade);
+      const estado = document.getElementById(fields.estado);
+      if (rua)    rua.value    = data.logradouro || rua.value;
+      if (bairro) bairro.value = data.bairro || bairro.value;
+      if (cidade) cidade.value = data.localidade || cidade.value;
+      if (estado) estado.value = data.uf || estado.value;
+    })
+    .catch(() => {}); // Falha de rede — usuário preenche manualmente
+}
+
+Object.keys(cepAddressMap).forEach(id => {
   const el = document.getElementById(id);
-  if (el) el.addEventListener('input', function() {
+  if (!el) return;
+  el.addEventListener('input', function() {
     let v = this.value.replace(/\D/g,'').slice(0,8);
     if (v.length > 5) v = v.slice(0,5)+'-'+v.slice(5);
     this.value = v;
   });
+  el.addEventListener('blur', function() { buscarEnderecoPorCep(id); });
+});
+
+// ── ESTADO/CIDADE DE NASCIMENTO — LISTA DE MUNICÍPIOS (IBGE) ──
+const ufNomeParaSigla = {
+  'acre':'AC','alagoas':'AL','amapá':'AP','amapa':'AP','amazonas':'AM','bahia':'BA','ceará':'CE','ceara':'CE',
+  'distrito federal':'DF','espírito santo':'ES','espirito santo':'ES','goiás':'GO','goias':'GO','maranhão':'MA','maranhao':'MA',
+  'mato grosso':'MT','mato grosso do sul':'MS','minas gerais':'MG','pará':'PA','para':'PA','paraíba':'PB','paraiba':'PB',
+  'paraná':'PR','parana':'PR','pernambuco':'PE','piauí':'PI','piaui':'PI','rio de janeiro':'RJ','rio grande do norte':'RN',
+  'rio grande do sul':'RS','rondônia':'RO','rondonia':'RO','roraima':'RR','santa catarina':'SC','são paulo':'SP','sao paulo':'SP',
+  'sergipe':'SE','tocantins':'TO',
+};
+
+document.getElementById('estadoNasc').addEventListener('blur', function() {
+  const sigla = ufNomeParaSigla[this.value.trim().toLowerCase()];
+  const cidadeList = document.getElementById('cidadeNascList');
+  if (!sigla) return; // Estado não reconhecido (ex: nascido fora do Brasil) — cidade permanece livre
+
+  fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${sigla}/municipios`)
+    .then(r => r.json())
+    .then(municipios => {
+      cidadeList.innerHTML = '';
+      municipios
+        .map(m => m.nome)
+        .sort((a, b) => a.localeCompare(b, 'pt-BR'))
+        .forEach(nome => {
+          const opt = document.createElement('option');
+          opt.value = nome;
+          cidadeList.appendChild(opt);
+        });
+    })
+    .catch(() => {}); // Falha de rede — usuário preenche manualmente
 });
 
 // ── MOBILE BOTTOM NAV ──
