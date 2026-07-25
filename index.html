@@ -1431,21 +1431,69 @@
       <div class="field-row cols-2">
         <div class="field">
           <label>1º Telefone — Residencial com DDD <span class="req">*</span></label>
-          <input type="tel" id="tel1" placeholder="(00) 0000-0000" required />
+          <div style="display:flex; gap:8px">
+            <input type="text" id="tel1Ddi" value="+55" placeholder="DDI" style="width:70px; flex-shrink:0" />
+            <input type="tel" id="tel1" placeholder="(00) 0000-0000" required style="flex:1" />
+          </div>
         </div>
         <div class="field">
           <label>2º Telefone — Celular com DDD</label>
-          <input type="tel" id="tel2" placeholder="(00) 90000-0000" />
+          <div style="display:flex; gap:8px">
+            <input type="text" id="tel2Ddi" value="+55" placeholder="DDI" style="width:70px; flex-shrink:0" />
+            <input type="tel" id="tel2" placeholder="(00) 90000-0000" style="flex:1" />
+          </div>
         </div>
       </div>
       <div class="field-row cols-2">
         <div class="field">
           <label>Telefone do Trabalho / Escola com DDD</label>
-          <input type="tel" id="telTrabalho" placeholder="Não se aplica, se não possuir" />
+          <div style="display:flex; gap:8px">
+            <input type="text" id="telTrabalhoDdi" value="+55" placeholder="DDI" style="width:70px; flex-shrink:0" />
+            <input type="tel" id="telTrabalho" placeholder="Não se aplica, se não possuir" style="flex:1" />
+          </div>
         </div>
         <div class="field">
           <label>E-mail <span class="req">*</span></label>
           <input type="email" id="email" required />
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Usou outro número de telefone nos últimos 5 anos? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="telOutroUltimos5Anos" value="nao" onchange="toggleBlock('block-tel-outro', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="telOutroUltimos5Anos" value="sim" onchange="toggleBlock('block-tel-outro', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-tel-outro">
+            <div class="field-row cols-1">
+              <div class="field">
+                <label>Outro Número de Telefone Utilizado</label>
+                <div style="display:flex; gap:8px">
+                  <input type="text" id="telOutroDdi" value="+55" placeholder="DDI" style="width:70px; flex-shrink:0" />
+                  <input type="tel" id="telOutro" placeholder="(00) 00000-0000" style="flex:1" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Usou outro endereço de e-mail nos últimos 5 anos? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="emailOutroUltimos5Anos" value="nao" onchange="toggleBlock('block-email-outro', false)" checked /> Não</label>
+            <label class="radio-option"><input type="radio" name="emailOutroUltimos5Anos" value="sim" onchange="toggleBlock('block-email-outro', true)" /> Sim</label>
+          </div>
+          <div class="conditional-block" id="block-email-outro">
+            <div class="field-row cols-1">
+              <div class="field">
+                <label>Outro E-mail Utilizado</label>
+                <input type="email" id="emailOutro" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1528,6 +1576,17 @@
             <label class="radio-option"><input type="radio" name="passRoubado" value="sim" onchange="toggleBlock('block-pass-roubado', true)" /> Sim</label>
           </div>
           <div class="conditional-block" id="block-pass-roubado">
+            <div class="field-row cols-1">
+              <div class="field">
+                <label>Motivo da perda/roubo</label>
+                <div class="radio-group" style="flex-direction:column; align-items:stretch">
+                  <label class="radio-option" style="align-items:flex-start"><input type="radio" name="motivoPassRoubado" value="descuido" /> <span><strong>Descuido ou esquecimento:</strong> Deixar o documento em hotéis, táxis, aeroportos ou locais públicos.</span></label>
+                  <label class="radio-option" style="align-items:flex-start"><input type="radio" name="motivoPassRoubado" value="furto" /> <span><strong>Furto ou roubo:</strong> Levar a caderneta junto com bolsas, carteiras ou malas levadas por criminosos.</span></label>
+                  <label class="radio-option" style="align-items:flex-start"><input type="radio" name="motivoPassRoubado" value="extravio" /> <span><strong>Extravio em trânsito:</strong> Perda da caderneta durante o deslocamento entre cidades ou países.</span></label>
+                  <label class="radio-option" style="align-items:flex-start"><input type="radio" name="motivoPassRoubado" value="danos" /> <span><strong>Danos graves:</strong> Destruição ou estrago do livreto que impeça a identificação do titular.</span></label>
+                </div>
+              </div>
+            </div>
             <div class="field-row cols-2">
               <div class="field">
                 <label>Número do passaporte roubado/perdido</label>
